@@ -3,14 +3,6 @@ import Tree from './tiles/Tree.js'
 import Hero from './tiles/Hero.js'
 
 class MapRow extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { 
-       checking:false
-    };
-
-  }
-
   render() {
     return (
       <div className="map-row">

@@ -7,32 +7,39 @@ class Map extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-       checking:false
-    };
-    this.echo = this.echo.bind(this);
+      checking:false,
+      game: {
+        map: [
+          [{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"}],
+          [{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"}],
+          [{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"}],
+          [{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"}]
+        ],
+        hero: {
+          location: {
+            x:0,
+            y:2
+          }
+        }
+      }
+    }
   }
 
   getMap() {
-    console.log("in getmap")
-    return [
-        [{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"}],
-        [{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"}],
-        [{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"}],
-        [{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"}]
-        ]
-  }
-
-  echo (){
-    console.log("HERE!!!!!")
+    let g = this.state.game;
+    let map = g.map;
+    map[g.hero.location.y][g.hero.location.x] = {tile:"hero"}
+    console.log("MAP",map)
+    return map;
   }
 
   render() {
     return (
       <div className="map"> here is Map
-        <Hero></Hero>
+
         {
           this.getMap().map(
-            (row) => <MapRow row={row}></MapRow> 
+            (row) => <MapRow row={row} game={this.state.game}></MapRow> 
           )
         }
       </div>

@@ -1,0 +1,15 @@
+To start: 
+  512  nvm use v10.5.0
+  513  npm start
+
+getting weird js errors deep in react?  probably wrong node version!
+
+
+======
+woohoo!  get tree to show
+x get guy to show
+- get map to show
+
+=====
+
+old workingish version: /Users/ascavone/Dropbox/projects/pilgrim/old/reagent-tutorial/hallway/resources/public/css/site.css

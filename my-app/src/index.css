@@ -1,0 +1,40 @@
+body {
+  font-family: 'Helvetica Neue', Verdana, Helvetica, Arial, sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 10px;
+  -webkit-font-smoothing: antialiased;
+  font-size: 1.125em;
+  color: #333;
+}
+
+.map {
+  line-height: 0em;
+
+}
+
+.tree{
+  background-color: #313131;
+  background-image: url(/resources/tree.gif);
+  width: 32px;
+  height: 32px;
+  background-size: cover;
+}
+
+.hero{
+  background-color: #313131;
+  background-image: url(/resources/smallchar.gif);
+  width: 32px;
+  height: 32px;
+  background-size: cover;
+}
+
+.empty-ground {
+  background: #313131;
+  width: 32px;
+  height: 32px;
+}
+
+.map-row div {
+    display: inline-block;
+  }

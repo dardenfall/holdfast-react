@@ -10,6 +10,7 @@ class MapRow extends Component {
           this.props.row.map(
             (t) => {
               let mapTags = [];
+              
               switch (t.tile){
                 case 'tree':
                   mapTags.push(<Tree></Tree>);
@@ -20,6 +21,7 @@ class MapRow extends Component {
                 default: 
                   mapTags.push(<div className="empty-ground"></div>);
               }
+              
               return mapTags;              
             }
           )

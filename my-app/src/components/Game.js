@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Map from './Map.js'
+import GameMap from './GameMap.js'
 
 class Game extends Component {
   constructor(props){
@@ -7,11 +7,11 @@ class Game extends Component {
     this.state = { 
       game: {
         map: [
-          [{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"}],
-          [{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"}],
-          [{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"none"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"}],
-          [{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"},{tile:"tree"}]
-        ],
+          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+          [1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1],
+          [0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
+          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+          ],
         hero: {
           location: {
             x:0,
@@ -23,6 +23,7 @@ class Game extends Component {
 
     this.setUpButtonHandler();
   }
+
 
   setUpButtonHandler(){
     window.addEventListener('keydown',(e) => {
@@ -68,13 +69,36 @@ class Game extends Component {
     this.updateHeroPosition(1,0)
   }
 
+  canMove(xdelta,ydelta){
+    let {x,y} = this.state.game.hero.location;
+    let tile = this.state.game.map[y+ydelta][x+xdelta];
+
+    return GameMap.translateTile(tile).navigable === "true";
+  } 
+
   updateHeroPosition(xdelta, ydelta){
-    console.log("old x", this.state.game.hero.location.x)
-    console.log("old y", this.state.game.hero.location.y)
-    this.state.game.hero.location.x += xdelta; 
-    this.state.game.hero.location.y += ydelta; 
-    console.log("new x", this.state.game.hero.location.x)
-    console.log("new y", this.state.game.hero.location.y)
+    let result = this.canMove(xdelta, ydelta);
+
+    if(!result) {
+      console.log("here");
+      return;
+    }
+
+    let l = { 
+        x: this.state.game.hero.location.x + xdelta, 
+        y: this.state.game.hero.location.y + ydelta}
+    this.setState({ 
+      game: {
+        map: [
+          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+          [1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1],
+          [0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
+          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+          ],
+        hero: {
+          location: l
+        }
+      }})
   }
 
   handleButtonPress(e){
@@ -84,7 +108,7 @@ class Game extends Component {
   render() {
     return (
       <div onKeyDown={this.handleButtonPress}> here is Game 
-        <Map game={this.state.game}></Map>
+        <GameMap game={this.state.game}></GameMap>
       </div>
     );
   }

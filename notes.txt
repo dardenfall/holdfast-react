@@ -8,7 +8,7 @@ getting weird js errors deep in react?  probably wrong node version!
 ======
 woohoo!  get tree to show
 x get guy to show
-- get map to show
+x get map to show
 
 =====
 

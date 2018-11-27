@@ -11,8 +11,8 @@ const initialState = {
         ],
       hero: {
         location: {
-          x:0,
-          y:2
+          row:0,
+          column:2
         }
       }
     }
@@ -63,22 +63,22 @@ const moveRight = (state) => {
   return updateHeroPosition(state,1,0)
 }
 
-const canMove = (game, xdelta,ydelta) => {
-  let {x,y} = game.hero.location;
-  let tile = game.map[y+ydelta][x+xdelta];
+const canMove = (game, rowDelta,columnDelta) => {
+  let {row,column} = game.hero.location;
+  let tile = game.map[column+columnDelta][row+rowDelta];
 
   return Util.translateTile(tile).navigable === "true";
 } 
 
-const updateHeroPosition = (state, xdelta, ydelta) => {
+const updateHeroPosition = (state, rowDelta, columnDelta) => {
   let l = { 
-    x: state.game.hero.location.x, 
-    y: state.game.hero.location.y};
+    row: state.game.hero.location.row, 
+    column: state.game.hero.location.column};
 
-  if(canMove(state.game, xdelta, ydelta)) {
+  if(canMove(state.game, rowDelta, columnDelta)) {
     l = { 
-      x: state.game.hero.location.x + xdelta, 
-      y: state.game.hero.location.y + ydelta};
+      row: state.game.hero.location.row + rowDelta, 
+      column: state.game.hero.location.column + columnDelta};
   }
 
 

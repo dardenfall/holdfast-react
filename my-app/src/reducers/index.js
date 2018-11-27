@@ -1,4 +1,5 @@
 import GameMap from "../components/GameMap.js"
+import Util from "../Util.js"
 
 const initialState = { 
     game: {
@@ -29,66 +30,59 @@ export const rootReducer = (state = initialState, action) => {
 const processKeyPress = (e, state) => {
     switch (e.which) {
       case 37:
-        moveLeft(state);
-        break;
+        return moveLeft(state);
       case 65:
-        moveLeft(state);
-        break;
+        return moveLeft(state);
       case 38:
-        moveUp(state);
-        break;
+        return moveUp(state);
       case 87:
-        moveUp(state);
-        break;
+        return moveUp(state);
       case 39:
-        moveRight(state);
-        break;
+        return moveRight(state);
       case 68:
-        moveRight(state);
-        break;
+        return moveRight(state);
       case 40:
-        moveDown(state);
-        break;
+        return moveDown(state);
       case 83:
-        moveDown(state);
-        break;
+        return moveDown(state);
       default:
         throw "no move selected"
     }      
 }
 
 const moveDown = (state) => {
-  updateHeroPosition(state,0,1)
+  return updateHeroPosition(state,0,1)
 }
 const moveUp = (state) => {
-  updateHeroPosition(state,0,-1)
+  return updateHeroPosition(state,0,-1)
 }
 const moveLeft = (state) => {
-  updateHeroPosition(state,-1,0)
+  return updateHeroPosition(state,-1,0)
 }
 const moveRight = (state) => {
-  updateHeroPosition(state,1,0)
+  return updateHeroPosition(state,1,0)
 }
 
 const canMove = (game, xdelta,ydelta) => {
   let {x,y} = game.hero.location;
   let tile = game.map[y+ydelta][x+xdelta];
 
-  return GameMap.translateTile(tile).navigable === "true";
+  return Util.translateTile(tile).navigable === "true";
 } 
 
 const updateHeroPosition = (state, xdelta, ydelta) => {
-  let result = canMove(state.game, xdelta, ydelta);
+  let l = { 
+    x: state.game.hero.location.x, 
+    y: state.game.hero.location.y};
 
-  if(!result) {
-      console.log("here");
-      return;
+  if(canMove(state.game, xdelta, ydelta)) {
+    l = { 
+      x: state.game.hero.location.x + xdelta, 
+      y: state.game.hero.location.y + ydelta};
   }
 
-  let l = { 
-      x: state.game.hero.location.x + xdelta, 
-      y: state.game.hero.location.y + ydelta}
-  this.setState({ 
+
+  return{ 
       game: {
       map: [
           [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -99,7 +93,8 @@ const updateHeroPosition = (state, xdelta, ydelta) => {
       hero: {
           location: l
       }
-      }});
+    }
+  };
 }
 
 export default rootReducer;

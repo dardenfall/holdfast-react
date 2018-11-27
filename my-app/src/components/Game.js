@@ -1,22 +1,37 @@
 import React from 'react';
 import { keyPressed } from '../actions';
-import { connect } from 'react-redux'
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import GameMap from './GameMap.js'
-
-const Game = ({dispatch}) => {
-
+const Game = (props) => {
+  const {game, keyPressed} = props;
   return (
-    <div onKeyDown={e => {
-      e.preventDefault();
-      
-      dispatch(keyPressed(e.which));
-    }}> 
+    <div 
+      tabIndex="0"
+      onKeyDown={(e) => {
+        e.preventDefault();
+        keyPressed(e)
+      } 
+    }> 
       here is Game 
-      <GameMap g={!!!!!}></GameMap>
+      <GameMap g={game}></GameMap>
     </div>
   );
 }
-
-
-
-export default connect()(Game)
+const mapStateToProps = state => {
+  return {
+    game: state.game
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      keyPressed: keyPressed
+    },
+    dispatch
+  );
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Game);

@@ -1,19 +1,8 @@
 import React from 'react';
-import MapRow from './MapRow.js'
+import MapRow from './MapRow.js';
+import Util from "../Util.js";
 
 const GameMap = ({g}) => {
-  const translateTile = (tile) => {
-    switch(tile){
-      case 0:
-        return {tile:"none", navigable:"true"};
-      case 1: 
-        return {tile:"tree", navigable:"false"};
-      case 9: 
-        return {tile:"hero", navigable:"false"};
-      default:
-        throw "missing tile type";
-    }
-  }
 
   const getMap = (g) => {
     let digitMap = g.map;
@@ -24,7 +13,7 @@ const GameMap = ({g}) => {
     
     digitMap.forEach((row, rowIndex) => 
       row.forEach( (cell, cellIndex) => 
-        translatedMap[rowIndex][cellIndex] = translateTile(cell)
+        translatedMap[rowIndex][cellIndex] = Util.translateTile(cell)
     ));
     return translatedMap;
   }

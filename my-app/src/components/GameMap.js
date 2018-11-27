@@ -1,48 +1,44 @@
-import React, { Component } from 'react';
-import Tree from './tiles/Tree.js'
-import Hero from './tiles/Hero.js'
+import React from 'react';
 import MapRow from './MapRow.js'
 
-class GameMap extends Component {
-
-  static translateTile(tile){
+const GameMap = ({g}) => {
+  const translateTile = (tile) => {
     switch(tile){
       case 0:
-        return {tile:"none", navigable:"true"}
+        return {tile:"none", navigable:"true"};
       case 1: 
-        return {tile:"tree", navigable:"false"}
+        return {tile:"tree", navigable:"false"};
       case 9: 
-        return {tile:"hero", navigable:"false"}
+        return {tile:"hero", navigable:"false"};
+      default:
+        throw "missing tile type";
     }
   }
 
-  getMap() {
-    let g = this.props.game;
+  const getMap = (g) => {
     let digitMap = g.map;
     digitMap[g.hero.location.y][g.hero.location.x] = 9
 
-    let translatedMap = new Array();
-    digitMap.forEach( () => translatedMap.push(new Array()));
+    let translatedMap = [];
+    digitMap.forEach( () => translatedMap.push([]));
     
-
     digitMap.forEach((row, rowIndex) => 
       row.forEach( (cell, cellIndex) => 
-        translatedMap[rowIndex][cellIndex] = GameMap.translateTile(cell)
+        translatedMap[rowIndex][cellIndex] = translateTile(cell)
     ));
     return translatedMap;
   }
 
-  render() {
-    return (
-      <div className="map">
-        {
-          this.getMap().map(
-            (row) => <MapRow row={row}></MapRow> 
-          )
-        }
-      </div>
-    );
-  }
+  return (
+    <div className="map">
+      {
+        getMap(g).map(
+          (row) => <MapRow row={row}></MapRow> 
+        )
+      }
+    </div>
+  )
+
 }
 
 export default GameMap;

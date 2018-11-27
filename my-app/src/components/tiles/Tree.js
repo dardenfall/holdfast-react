@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Tree extends Component {
-  render() {
-    return (
-      <div className="tree"></div>
-    );
-  }
+const Tree = () => {
+  return (
+    <div className="tree"></div>
+  );
 }
 
 export default Tree;

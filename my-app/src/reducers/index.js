@@ -1,24 +1,31 @@
-import GameMap from "../components/GameMap.js"
 import Util from "../Util.js"
 
 const initialState = { 
     game: {
-      map: [
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1],
-        [0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-        ],
+      map:[
+
+        [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+         [1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1  ],
+         [1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,820],
+         [1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1  ]],
+
+        [[1  ,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+         [1  ,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1],
+         [810,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
+         [1  ,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+      
+      ],
       hero: {
         location: {
-          row:0,
+          level:0,
+          row:3,
           column:2
         }
       }
     }
-  }
+  };
 
-export const rootReducer = (state = initialState, action) => {
+const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'KEY_PRESSED':
       return processKeyPress(action.key, state);
@@ -51,50 +58,64 @@ const processKeyPress = (e, state) => {
 }
 
 const moveDown = (state) => {
-  return updateHeroPosition(state,0,1)
-}
-const moveUp = (state) => {
-  return updateHeroPosition(state,0,-1)
-}
-const moveLeft = (state) => {
-  return updateHeroPosition(state,-1,0)
-}
-const moveRight = (state) => {
   return updateHeroPosition(state,1,0)
 }
-
-const canMove = (game, rowDelta,columnDelta) => {
-  let {row,column} = game.hero.location;
-  let tile = game.map[column+columnDelta][row+rowDelta];
-
-  return Util.translateTile(tile).navigable === "true";
-} 
+const moveUp = (state) => {
+  return updateHeroPosition(state,-1,0)
+}
+const moveLeft = (state) => {
+  return updateHeroPosition(state,0,-1)
+}
+const moveRight = (state) => {
+  return updateHeroPosition(state,0,1)
+}
 
 const updateHeroPosition = (state, rowDelta, columnDelta) => {
+  let {level,row,column} = state.game.hero.location;
+  let tileNum = state.game.map[level][row+rowDelta][column+columnDelta];
+  let translatedTile = Util.translateTile(tileNum);
+
   let l = { 
+    level: state.game.hero.location.level,
     row: state.game.hero.location.row, 
     column: state.game.hero.location.column};
+    let levelDelta = 0;
 
-  if(canMove(state.game, rowDelta, columnDelta)) {
+  if(translatedTile.navigable) {
+
+    if(translatedTile.transition === "exit"){
+      levelDelta = 1;
+    }
+    if(translatedTile.transition === "entrance"){
+      levelDelta = -1;
+    }
     l = { 
+      level: state.game.hero.location.level + levelDelta,  
       row: state.game.hero.location.row + rowDelta, 
-      column: state.game.hero.location.column + columnDelta};
+      column: state.game.hero.location.column + columnDelta
+    };
   }
 
-
-  return{ 
+  return { 
       game: {
-      map: [
-          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-          [1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1],
-          [0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
-          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-          ],
+      map:[
+
+        [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1  ],
+         [1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1  ],
+         [1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,820],
+         [1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1  ]],
+
+        [[1  ,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+         [1  ,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1],
+         [810,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
+         [1  ,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+      
+      ],
       hero: {
           location: l
       }
     }
-  };
+  }
 }
 
 export default rootReducer;

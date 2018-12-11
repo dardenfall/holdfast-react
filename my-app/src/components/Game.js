@@ -28,6 +28,10 @@ const getQuadrantMap = (heroRow, heroColumn, globalMap) => {
       if(heroRow === r && heroColumn === c){
         mapRow.push(9);
       }
+      // TODO put enemy in here - figure out where and how to keep npcs and enemies
+      // if(heroRow === r && heroColumn === c){
+      //   mapRow.push(9);
+      // }
       else{
         mapRow.push(globalMap[r][c]);
       }

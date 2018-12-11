@@ -28,6 +28,46 @@ body {
   background-size: cover;
 }
 
+.hero-left{
+  background-color: #313131;
+  background-image: url(/resources/smallchar-left.gif);
+  width: 32px;
+  height: 32px;
+  background-size: cover;
+}
+
+.hero-right{
+  background-color: #313131;
+  background-image: url(/resources/smallchar-right.gif);
+  width: 32px;
+  height: 32px;
+  background-size: cover;
+}
+
+.hero-up{
+  background-color: #313131;
+  background-image: url(/resources/smallchar-up.gif);
+  width: 32px;
+  height: 32px;
+  background-size: cover;
+}
+
+.hero-down{
+  background-color: #313131;
+  background-image: url(/resources/smallchar-down.gif);
+  width: 32px;
+  height: 32px;
+  background-size: cover;
+}
+
+.enemy{
+  background-color: #313131;
+  background-image: url(/resources/enemy.gif);
+  width: 32px;
+  height: 32px;
+  background-size: cover;
+}
+
 .empty-ground {
   background: #313131;
   width: 32px;

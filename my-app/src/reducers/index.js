@@ -14,9 +14,17 @@ const initialState = {
     game: {
       map: globalMap,
       hero: {
+        direction: Util.DIRECTION.RIGHT,
         location: {
           row:1,
           column:1
+        }
+      },
+      enemy: {
+        direction: Util.DIRECTION.RIGHT,
+        location: {
+          row:6,
+          column:10
         }
       }
     }
@@ -55,19 +63,19 @@ const processKeyPress = (e, state) => {
 }
 
 const moveDown = (state) => {
-  return updateHeroPosition(state,1,0)
+  return updateHeroPosition(state,Util.DIRECTION.DOWN,1,0);
 }
 const moveUp = (state) => {
-  return updateHeroPosition(state,-1,0)
+  return updateHeroPosition(state,Util.DIRECTION.UP,-1,0);
 }
 const moveLeft = (state) => {
-  return updateHeroPosition(state,0,-1)
+  return updateHeroPosition(state,Util.DIRECTION.LEFT,0,-1);
 }
 const moveRight = (state) => {
-  return updateHeroPosition(state,0,1)
+  return updateHeroPosition(state,Util.DIRECTION.RIGHT,0,1);
 }
 
-const updateHeroPosition = (state, rowDelta, columnDelta) => {
+const updateHeroPosition = (state, direction, rowDelta, columnDelta) => {
   let {row,column} = state.game.hero.location;
   let tileNum = state.game.map[row+rowDelta][column+columnDelta];
   let translatedTile = Util.translateTile(tileNum);
@@ -88,7 +96,15 @@ const updateHeroPosition = (state, rowDelta, columnDelta) => {
       game: {
         map:globalMap,
         hero: {
+            direction: direction,
             location: l
+        },
+        enemy: {
+          direction: Util.DIRECTION.RIGHT,
+          location: {
+            row:6,
+            column:10
+          }
         }
       }
     } 

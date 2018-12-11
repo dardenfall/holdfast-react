@@ -1,0 +1,4 @@
+-> add direction controller
+- use that typescripty thing around props
+- add something else that finds character and follows him
+- add village

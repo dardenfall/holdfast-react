@@ -1,25 +1,22 @@
 import Util from "../Util.js"
 
+const globalMap =         
+    [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+     [1,0,1,1,1,1,1,1,1,1,0,0,0,0,0,1],
+     [1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1],
+     [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1],
+     [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1],
+     [1,1,1,0,1,1,1,1,1,1,0,0,0,0,0,1],
+     [1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
+     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
+
 const initialState = { 
     game: {
-      map:[
-
-        [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-         [1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1  ],
-         [1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,820],
-         [1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1  ]],
-
-        [[1  ,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-         [1  ,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1],
-         [810,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
-         [1  ,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
-      
-      ],
+      map: globalMap,
       hero: {
         location: {
-          level:0,
-          row:3,
-          column:2
+          row:1,
+          column:1
         }
       }
     }
@@ -53,7 +50,7 @@ const processKeyPress = (e, state) => {
       case 83:
         return moveDown(state);
       default:
-        throw "no move selected"
+        throw new Error("no move selected");
     }      
 }
 
@@ -71,51 +68,30 @@ const moveRight = (state) => {
 }
 
 const updateHeroPosition = (state, rowDelta, columnDelta) => {
-  let {level,row,column} = state.game.hero.location;
-  let tileNum = state.game.map[level][row+rowDelta][column+columnDelta];
+  let {row,column} = state.game.hero.location;
+  let tileNum = state.game.map[row+rowDelta][column+columnDelta];
   let translatedTile = Util.translateTile(tileNum);
 
-  let l = { 
-    level: state.game.hero.location.level,
+  let l = {
     row: state.game.hero.location.row, 
-    column: state.game.hero.location.column};
-    let levelDelta = 0;
-
+    column: state.game.hero.location.column
+  };
+  
   if(translatedTile.navigable) {
-
-    if(translatedTile.transition === "exit"){
-      levelDelta = 1;
-    }
-    if(translatedTile.transition === "entrance"){
-      levelDelta = -1;
-    }
     l = { 
-      level: state.game.hero.location.level + levelDelta,  
       row: state.game.hero.location.row + rowDelta, 
       column: state.game.hero.location.column + columnDelta
     };
   }
-
+  
   return { 
       game: {
-      map:[
-
-        [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1  ],
-         [1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1  ],
-         [1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,820],
-         [1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1  ]],
-
-        [[1  ,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-         [1  ,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1],
-         [810,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
-         [1  ,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
-      
-      ],
-      hero: {
-          location: l
+        map:globalMap,
+        hero: {
+            location: l
+        }
       }
-    }
-  }
+    } 
 }
 
 export default rootReducer;

@@ -2,8 +2,6 @@ import React from 'react';
 import Util from '../../Util';
 
 const Hero = (props) => {
-  console.log("In hero");
-  console.log(props);
   let cn = "";
 
   switch (props.direction) {

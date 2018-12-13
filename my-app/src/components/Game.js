@@ -15,7 +15,7 @@ const getQuadrant = (row, column) => {
   }
 }
 
-const getQuadrantMap = (heroRow, heroColumn, globalMap) => {
+const getQuadrantMap = (heroRow, heroColumn, charCoordMapping, globalMap) => {
   let quadrant = getQuadrant(heroRow, heroColumn);
 
   let startCol = quadrant.quadColumn * QUADRANT_COLUMNS;
@@ -25,14 +25,17 @@ const getQuadrantMap = (heroRow, heroColumn, globalMap) => {
   for(let r = startRow; r < (quadrant.quadRow + 1) * QUADRANT_ROWS; r++){
     let mapRow = [];
     for(let c = startCol; c < (quadrant.quadColumn + 1) * QUADRANT_COLUMNS; c++){
-      if(heroRow === r && heroColumn === c){
-        mapRow.push(9);
+      
+      let charFound = false;
+      for(let char of charCoordMapping){
+        if(char.row === r && char.column === c){
+          mapRow.push(char.tileNum);
+          charFound = true;
+          break;
+        }
       }
-      // TODO put enemy in here - figure out where and how to keep npcs and enemies
-      // if(heroRow === r && heroColumn === c){
-      //   mapRow.push(9);
-      // }
-      else{
+
+      if(!charFound){
         mapRow.push(globalMap[r][c]);
       }
     }
@@ -45,7 +48,19 @@ const Game = (props) => {
   const {game, keyPressed} = props;
   
   const getMap = () => {
-    let digitMap = getQuadrantMap(game.hero.location.row, game.hero.location.column, game.map);
+    let charCoordMapping = [{
+      row: game.hero.location.row,
+      column: game.hero.location.column,
+      tileNum: 9
+    },{
+      row: game.enemy.location.row,
+      column: game.enemy.location.column,
+      tileNum: 999
+    }]
+    let digitMap = getQuadrantMap(game.hero.location.row, 
+      game.hero.location.column, 
+      charCoordMapping, 
+      game.map);
   
     let translatedMap = [];
     digitMap.forEach( () => translatedMap.push([]));

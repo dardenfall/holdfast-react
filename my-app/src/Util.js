@@ -22,7 +22,11 @@ export default {
   },
 
   withinNSquares: (self, target, N) => {
-    return ( Math.abs(self.row - target.row) >= N && 
-             Math.abs(self.column - target.column) >= N )
+    debugger;
+    let distance = Math.sqrt(
+      Math.pow(self.row - target.row, 2) + 
+      Math.pow(self.column - target.column, 2)
+    )
+    return distance >= N;
   }
 }

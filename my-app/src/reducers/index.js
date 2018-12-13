@@ -33,7 +33,11 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'KEY_PRESSED':
-      return processKeyPress(action.key, state);
+      let returnState = processKeyPress(action.key, state);
+      if( Util.withinNSquares(returnState.game.hero.location, returnState.game.enemy.location, 2)){
+        console.log('enemy is within 2 spaces');
+      }
+      return returnState;
     default:
       return state;
   }
@@ -58,7 +62,8 @@ const processKeyPress = (e, state) => {
       case 83:
         return moveDown(state);
       default:
-        throw new Error("no move selected");
+        console.log("no move selected");
+        return state;
     }      
 }
 

@@ -5,6 +5,8 @@ export default {
         return {tile:"none", navigable:true};
       case 1: 
         return {tile:"tree", navigable:false};
+    
+      //don't think these are used
       case 9: 
         return {tile:"hero", navigable:false};
       case 999: 

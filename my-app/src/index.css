@@ -68,6 +68,14 @@ body {
   background-size: cover;
 }
 
+.food{
+  background-color: #313131;
+  background-image: url(/resources/food.gif);
+  width: 32px;
+  height: 32px;
+  background-size: cover;
+}
+
 .empty-ground {
   background: #313131;
   width: 32px;

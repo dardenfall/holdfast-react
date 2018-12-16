@@ -29,7 +29,7 @@ const getQuadrantMap = (heroRow, heroColumn, charCoordMapping, globalMap) => {
       let charFound = false;
       for(let char of charCoordMapping){
         if(char.row === r && char.column === c){
-          mapRow.push(char.tileNum);
+          mapRow.push(char.tile);
           charFound = true;
           break;
         }
@@ -51,25 +51,18 @@ const Game = (props) => {
     let charCoordMapping = [{
       row: game.hero.location.row,
       column: game.hero.location.column,
-      tileNum: 9
+      tile: {tile:"hero", navigable:false}
     },{
       row: game.enemy.location.row,
       column: game.enemy.location.column,
-      tileNum: 999
+      tile: {tile:"enemy", navigable:false}
     }]
     let digitMap = getQuadrantMap(game.hero.location.row, 
       game.hero.location.column, 
       charCoordMapping, 
       game.map);
-  
-    let translatedMap = [];
-    digitMap.forEach( () => translatedMap.push([]));
-    
-    digitMap.forEach((row, rowIndex) => 
-      row.forEach( (column, columnIndex) => 
-        translatedMap[rowIndex][columnIndex] = Util.translateTile(column)
-    ));
-    return translatedMap;
+
+    return digitMap;
   }
   
   return (

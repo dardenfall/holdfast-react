@@ -20,35 +20,30 @@ const placeScavengables = (origMap, scavengables) => {
   scavengables.forEach( scavengable => {
     placementCounts[scavengable.id] = 0;
   });
-debugger;
-  for(let i = 0; i < origMap.length; i++){
-    let row = origMap[i];
 
-    for(let j = 0; j < row.length; j++){
+  origMap.forEach( (row, rowIndex) => {
+    row.forEach ( (column, columnIndex) =>{
+      scavengables.forEach( (scavengable) => {
+        let rnd = Math.random();
+        console.log("Processing", rnd, scavengable);
 
-
-        for(let k = 0; k < scavengables.length; k++){
-          let scavengable = scavengables[k];
-
-          let rnd = Math.random();
-          console.log("Processing", rnd, scavengable);
-
-          if(mapWithPlacedScavenables[i][j].navigable){
-            break;
-          }
-
-          if( placementCounts[scavengable.id] !== scavengable.maxSpawnPerQuadrant &&   
-              rnd <= scavengable.spawnChance ){
-            mapWithPlacedScavenables[i][j] = scavengable.getMapTile();
-            console.log("Placing", i, j, scavengable);
-
-            placementCounts[scavengable.id]++;
-            break;
-          }
+        if(mapWithPlacedScavenables[rowIndex][columnIndex].navigable){
+          return;
         }
-    }
-  }
- 
+
+        if( placementCounts[scavengable.id] !== scavengable.maxSpawnPerQuadrant &&   
+            rnd <= scavengable.spawnChance ){
+          mapWithPlacedScavenables[rowIndex][columnIndex] = scavengable.getMapTile();
+          console.log("Placing", rowIndex, columnIndex, scavengable);
+
+          placementCounts[scavengable.id]++;
+          return;
+        }
+
+      })
+    })  
+  })
+
   return mapWithPlacedScavenables;
 }
 

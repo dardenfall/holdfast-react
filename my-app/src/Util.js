@@ -1,16 +1,14 @@
+import React from 'react';
+import EmptyGround from "./components/tiles/EmptyGround";
+import Tree from "./components/tiles/Tree";
+
 export default {
   translateTile : (tile) => {
     switch(tile){
       case 0:
-        return {tile:"none", navigable:true};
+        return {tile:"none", navigable:true, component: <EmptyGround/>};
       case 1: 
-        return {tile:"tree", navigable:false};
-    
-      //don't think these are used
-      case 9: 
-        return {tile:"hero", navigable:false};
-      case 999: 
-        return {tile:"enemy", navigable:false};
+        return {tile:"tree", navigable:false, component: <Tree/>};
       default:
         throw new Error(`missing tile type ${tile}`);
     }

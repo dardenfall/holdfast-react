@@ -2,8 +2,7 @@ import React from 'react';
 import { keyPressed } from '../actions';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import GameMap from './GameMap.js'
-import Util from "../Util.js";
+import GameMap from './GameMap.js';
 
 const QUADRANT_COLUMNS = 8;
 const QUADRANT_ROWS = 4;
@@ -51,11 +50,11 @@ const Game = (props) => {
     let charCoordMapping = [{
       row: game.hero.location.row,
       column: game.hero.location.column,
-      tile: {tile:"hero", navigable:false}
+      tile: game.hero.tile
     },{
       row: game.enemy.location.row,
       column: game.enemy.location.column,
-      tile: {tile:"enemy", navigable:false}
+      tile: game.enemy.tile
     }]
     let digitMap = getQuadrantMap(game.hero.location.row, 
       game.hero.location.column, 

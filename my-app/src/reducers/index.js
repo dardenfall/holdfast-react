@@ -1,5 +1,8 @@
 import Util from "../Util.js"
 import Scavengable from "../models/Scavengable";
+import React from 'react';
+import Hero from '../components/tiles/Hero';
+import Enemy from '../components/tiles/Enemy';
 
 const translateMap = (origMap) => {
 
@@ -71,14 +74,16 @@ const initialState = {
         location: {
           row:1,
           column:1
-        }
+        },
+        tile: {tile:"hero", navigable:false, component: <Hero/>}
       },
       enemy: {
         direction: Util.DIRECTION.RIGHT,
         location: {
           row:6,
           column:10
-        }
+        },
+        tile: {tile:"enemy", navigable:false, component: <Enemy/>}
       }
     }
   };
@@ -154,14 +159,16 @@ const updateHeroPosition = (state, direction, rowDelta, columnDelta) => {
         map: translatedMap,
         hero: {
             direction: direction,
-            location: l
+            location: l,
+            tile: {tile:"hero", navigable:false, component: <Hero/>}
         },
         enemy: {
           direction: Util.DIRECTION.RIGHT,
           location: {
             row:6,
             column:10
-          }
+          },
+          tile: {tile:"enemy", navigable:false, component: <Enemy/>}
         }
       }
     } 

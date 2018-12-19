@@ -2,13 +2,17 @@ import React from 'react';
 import EmptyGround from "./components/tiles/EmptyGround";
 import Tree from "./components/tiles/Tree";
 
-export default {
+const Util = {
+  isTileNavigable(tile){
+    return tile.solidity <= 0;
+  },
+
   translateTile : (tile) => {
     switch(tile){
       case 0:
-        return {tile:"none", navigable:true, component: <EmptyGround/>};
+        return {tile:"none", solidity:0, maxSolidity:0, component: <EmptyGround/>};
       case 1: 
-        return {tile:"tree", navigable:false, component: <Tree/>};
+        return {tile:"tree", solidity:10, maxSolidity:10, component: <Tree/>};
       default:
         throw new Error(`missing tile type ${tile}`);
     }
@@ -22,7 +26,6 @@ export default {
   },
 
   withinNSquares: (self, target, N) => {
-    debugger;
     let distance = Math.sqrt(
       Math.pow(self.row - target.row, 2) + 
       Math.pow(self.column - target.column, 2)
@@ -62,7 +65,7 @@ const getNavigableCoordinates = (rowIndex, columnIndex, lastRowIndex, lastColumn
             return;
           }
 
-      if(gameMap[rIndex][cIndex].navigable){
+      if(Util.isTileNavigable(gameMap[rIndex][cIndex])){
         navigableCoordinates.push({
           row:rIndex,
           column:cIndex
@@ -74,13 +77,6 @@ const getNavigableCoordinates = (rowIndex, columnIndex, lastRowIndex, lastColumn
   return navigableCoordinates;
 }
 
-// eslint-disable-next-line
-let m = 
-[
-[{navigable: false}, {navigable: true},{navigable: false}],
-[{navigable: true}, {navigable: true},{navigable: true}],
-[{navigable: false}, {navigable: true},{navigable: false}]
-]
 
 //doesn't work because it doesn't keep track of touched tiles
 // eslint-disable-next-line
@@ -103,3 +99,5 @@ const touchAllNavigableTiles = (startRowIndex, startColumnIndex, quadrantMap, ti
 }
 
 //touchAllNavigableTiles(1,0,m,(r,c,m)=>console.log(`touched ${r}, ${c}`) );
+
+export default Util;

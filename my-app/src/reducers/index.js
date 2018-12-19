@@ -28,9 +28,8 @@ const placeScavengables = (origMap, scavengables) => {
     row.forEach ( (column, columnIndex) =>{
       scavengables.forEach( (scavengable) => {
         let rnd = Math.random();
-        console.log("Processing", rnd, scavengable);
 
-        if(mapWithPlacedScavenables[rowIndex][columnIndex].navigable){
+        if(Util.isTileNavigable(mapWithPlacedScavenables[rowIndex][columnIndex])){
           return;
         }
 
@@ -75,7 +74,7 @@ const initialState = {
           row:1,
           column:1
         },
-        tile: {tile:"hero", navigable:false, component: <Hero/>}
+        tile: {tile:"hero", solidity:Infinity, maxSolidity:Infinity, component: <Hero/>}
       },
       enemy: {
         direction: Util.DIRECTION.RIGHT,
@@ -83,7 +82,7 @@ const initialState = {
           row:6,
           column:10
         },
-        tile: {tile:"enemy", navigable:false, component: <Enemy/>}
+        tile: {tile:"enemy", solidity:Infinity, maxSolidity:Infinity, component: <Enemy/>}
       }
     }
   };
@@ -146,12 +145,19 @@ const updateHeroPosition = (state, direction, rowDelta, columnDelta) => {
     row: state.game.hero.location.row, 
     column: state.game.hero.location.column
   };
-  
-  if(tile.navigable) {
+
+  let targetRow = state.game.hero.location.row + rowDelta;
+  let targetColumn= state.game.hero.location.column + columnDelta;
+
+  if(Util.isTileNavigable(tile)) {
     l = { 
-      row: state.game.hero.location.row + rowDelta, 
-      column: state.game.hero.location.column + columnDelta
+      row: targetRow,
+      column: targetColumn
     };
+  }
+  else{
+    debugger;
+    translatedMap[targetRow][targetColumn].solidity--;
   }
   
   return { 
@@ -160,7 +166,7 @@ const updateHeroPosition = (state, direction, rowDelta, columnDelta) => {
         hero: {
             direction: direction,
             location: l,
-            tile: {tile:"hero", navigable:false, component: <Hero/>}
+            tile: {tile:"hero", solidity:Infinity, maxSolidity:Infinity, component: <Hero/>}
         },
         enemy: {
           direction: Util.DIRECTION.RIGHT,
@@ -168,7 +174,7 @@ const updateHeroPosition = (state, direction, rowDelta, columnDelta) => {
             row:6,
             column:10
           },
-          tile: {tile:"enemy", navigable:false, component: <Enemy/>}
+          tile: {tile:"enemy", solidity:Infinity, maxSolidity:Infinity, component: <Enemy/>}
         }
       }
     } 

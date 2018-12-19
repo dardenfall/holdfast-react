@@ -29,7 +29,7 @@ class Hero extends React.Component {
     }
   
     return (
-      <div className={cn}></div>
+      <div className={cn + " tile"}></div>
     );
   }
 

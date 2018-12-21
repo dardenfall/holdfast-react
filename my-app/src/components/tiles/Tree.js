@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Tree = () => {
+const Tree = (props) => {
   return (
-    <div className="tile tree"></div>
+    <div className="tile tree" style={{opacity: props.opacity}}></div>
   );
 }
 

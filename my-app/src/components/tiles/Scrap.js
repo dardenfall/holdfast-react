@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Scrap = () => {
+const Scrap = (props) => {
   return (
-    <div className="tile scrap"></div>
+    <div className="tile scrap" style={{opacity: props.opacity}}></div>
   );
 }
 

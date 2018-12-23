@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Food = () => {
+const Food = (props) => {
   return (
-    <div className="tile food"></div>
+    <div className="tile food" style={{opacity: props.opacity}}></div>
   );
 }
 

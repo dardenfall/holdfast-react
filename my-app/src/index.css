@@ -10,6 +10,8 @@ body {
 
 .map {
   line-height: 0em;
+  background: #313131;
+
 }
 
 .tile {

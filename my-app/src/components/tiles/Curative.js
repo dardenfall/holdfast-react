@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Curative = () => {
+const Curative = (props) => {
   return (
-    <div className="tile curative"></div>
+    <div className="tile curative" style={{opacity: props.opacity}}></div>
   );
 }
 

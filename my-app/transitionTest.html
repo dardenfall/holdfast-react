@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <style>
+      #spacer { 
+        height:30px;
+        width:30px;
+        padding: 10px;
+        background-color:brown
+      }
+      #transitionSquare {
+        height:30px;
+        width:30px;
+        background-color:green;
+        position:relative;
+      }
+      .tsquare {
+        top:0x;
+      }
+      .tsquare1 {
+        -webkit-transition-property: top;
+        -webkit-transition-duration: .5s;
+        -webkit-transition-timing-function: ease;
+        transition-property: top;
+        transition-duration: .5s;
+        transition-timing-function: ease;        
+        position:relative;
+        top:-10px;
+      }
+      .tsquare2 {
+        top:0px;
+        -webkit-transition-property: top;
+        -webkit-transition-duration: 1s;
+        transition-property: top;
+        transition-duration: 1s;    
+        position:relative;
+      }
+    </style>
+  </head>
+  <body>
+  <div id="spacer">foo</div>
+  <div id="transitionSquare" class="tsquare">bar</div>
+  </body>
+  <script>
+    function transition(elem){
+      console.log(elem);
+      elem.classList.remove("tsquare2");
+      elem.classList.add("tsquare1");
+
+      setTimeout(() => {
+        elem.classList.remove("tsquare1");
+      elem.classList.add("tsquare2");
+      }, 500);
+    }
+
+    document.querySelector('#transitionSquare').addEventListener("click", e => {
+     transition(e.target);
+    })
+  </script>
+</html>

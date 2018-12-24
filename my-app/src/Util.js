@@ -10,9 +10,9 @@ const Util = {
   translateTile : (tile) => {
     switch(tile){
       case 0:
-        return {tile:"none", solidity:0, maxSolidity:0, component: <EmptyGround/>};
+        return {tile:"empty-ground", solidity:0, maxSolidity:0};
       case 1: 
-        return {tile:"tree", solidity:10, maxSolidity:10, component: <Tree/>};
+        return {tile:"tree", solidity:10, maxSolidity:10};
       default:
         throw new Error(`missing tile type ${tile}`);
     }

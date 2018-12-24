@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import GameMap from './GameMap.js';
 
-const QUADRANT_COLUMNS = 8;
-const QUADRANT_ROWS = 4;
+const QUADRANT_COLUMNS = 10;
+const QUADRANT_ROWS = 6;
 
 const getQuadrant = (row, column) => {
   return {

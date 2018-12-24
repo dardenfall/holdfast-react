@@ -61,6 +61,14 @@ body {
   background-image: url(/resources/curative.gif);
 }
 
+.medSupply{
+  background-image: url(/resources/medSupply.gif);
+}
+
+.trapSupply{
+  background-image: url(/resources/trapSupply.gif);
+}
+
 .empty-ground {
   background: #313131;
   width: 32px;

@@ -50,14 +50,20 @@ const placeScavengables = (origMap, scavengables) => {
 }
 
 const integerMap =         
-    [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-     [1,0,1,1,1,1,1,1,1,1,0,0,0,0,0,1],
-     [1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1],
-     [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1],
-     [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1],
-     [1,1,1,0,1,1,1,1,1,1,0,0,0,0,0,1],
-     [1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
-     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
+    [
+     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+     [1,0,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,0,1,1,1,1,1,1,1,1,0,0,0,1],
+     [1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1],
+     [1,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,1,1,0,0,1],
+     [1,1,1,0,1,1,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,0,1,1],
+     [1,1,1,0,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,1,1,1,0,1,1,0,0,0,1],
+     [1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1],
+     [1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1],
+     [1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,0,0,0,0,1,1,1,1,0,1,1,1,1,1,1],
+     [1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,0,0,0,0,1],
+     [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
+     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+    ];
 
 let translatedMap = translateMap(integerMap);
 
@@ -74,7 +80,15 @@ const initialState = {
           row:1,
           column:1
         },
-        tile: {tile:"hero", solidity:Infinity, maxSolidity:Infinity, component: <Hero/>}
+        tile: {tile:"hero", solidity:Infinity, maxSolidity:Infinity, component: <Hero/>},
+        inventory: [
+          {name: "curative", magnitude: 0},
+          {name: "food", magnitude: 0},
+          {name: "incense", magnitude: 0},
+          {name: "medSupply", magnitude: 0},
+          {name: "scrap", magnitude: 0},
+          {name: "trapSupply", magnitude: 0}
+        ]
       },
       enemy: {
         direction: Util.DIRECTION.RIGHT,
@@ -137,7 +151,24 @@ const moveRight = (state) => {
   return updateHeroPosition(state,Util.DIRECTION.RIGHT,0,1);
 }
 
+const processInventory = (t, stateCopy) => {
+  debugger
+  return stateCopy.game.hero.inventory.map((inventoryItem)=>{ 
+    debugger
+    if(inventoryItem.name === t.tile){
+      inventoryItem.magnitude++;
+      return inventoryItem;
+    }
+    else{
+      return inventoryItem;
+    }
+  });
+}
+
 const updateHeroPosition = (state, direction, rowDelta, columnDelta) => {
+  let stateCopy =  JSON.parse(JSON.stringify(state));
+  stateCopy.game.hero.direction = direction;
+
   let {row,column} = state.game.hero.location;
   let tile = state.game.map[row+rowDelta][column+columnDelta];
 
@@ -154,30 +185,20 @@ const updateHeroPosition = (state, direction, rowDelta, columnDelta) => {
       row: targetRow,
       column: targetColumn
     };
+    stateCopy.game.hero.location = l;
   }
   else{
-    debugger;
-    translatedMap[targetRow][targetColumn].solidity--;
+    let tile = stateCopy.game.map[targetRow][targetColumn];
+    stateCopy.game.map[targetRow][targetColumn].solidity--;
+
+    if (stateCopy.game.map[targetRow][targetColumn].solidity === 0){
+      processInventory(tile, stateCopy);
+    }
+
   }
   
-  return { 
-      game: {
-        map: translatedMap,
-        hero: {
-            direction: direction,
-            location: l,
-            tile: {tile:"hero", solidity:Infinity, maxSolidity:Infinity, component: <Hero/>}
-        },
-        enemy: {
-          direction: Util.DIRECTION.RIGHT,
-          location: {
-            row:6,
-            column:10
-          },
-          tile: {tile:"enemy", solidity:Infinity, maxSolidity:Infinity, component: <Enemy/>}
-        }
-      }
-    } 
+  return stateCopy;
 }
+
 
 export default rootReducer;

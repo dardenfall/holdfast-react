@@ -1,8 +1,3 @@
-import React from 'react';
-import Food from '../components/tiles/Food';
-import Scrap from '../components/tiles/Scrap';
-import Curative from '../components/tiles/Curative';
-
 class Scavengable {
   constructor(id, name, spawnChance, maxSpawnPerQuadrant,  solidity, maxSolidity){
     this.id = id;

@@ -25,6 +25,10 @@ body {
   background-image: url(/resources/tree.gif);
 }
 
+.rock{
+  background-image: url(/resources/rock.gif);
+}
+
 .hero{
   background-image: url(/resources/smallchar.gif);
 }

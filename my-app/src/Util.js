@@ -1,7 +1,3 @@
-import React from 'react';
-import EmptyGround from "./components/tiles/EmptyGround";
-import Tree from "./components/tiles/Tree";
-
 const Util = {
   isTileNavigable(tile){
     return tile.solidity <= 0;
@@ -12,7 +8,9 @@ const Util = {
       case 0:
         return {tile:"empty-ground", solidity:0, maxSolidity:0};
       case 1: 
-        return {tile:"tree", solidity:10, maxSolidity:10};
+        return {tile:"tree", solidity:50, maxSolidity:50};
+      case 9: 
+        return {tile:"rock", solidity:Infinity, maxSolidity:Infinity};
       default:
         throw new Error(`missing tile type ${tile}`);
     }

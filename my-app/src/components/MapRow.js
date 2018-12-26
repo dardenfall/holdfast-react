@@ -1,5 +1,6 @@
 import React from 'react';
 import Tree from './tiles/Tree';
+import Rock from './tiles/Rock';
 import Food from './tiles/Food';
 import Scrap from './tiles/Scrap';
 import Enemy from './tiles/Enemy';
@@ -32,6 +33,9 @@ const MapRow = ({row}) => {
                 break;
               case 'tree':
                 mapTags.push(<Tree key={index} opacity={op}></Tree> );
+                break;
+              case 'rock':
+                mapTags.push(<Rock key={index} opacity={op}></Rock> );
                 break;
               case 'food':
                 mapTags.push(<Food key={index} opacity={op}></Food> );

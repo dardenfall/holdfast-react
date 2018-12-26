@@ -10,7 +10,7 @@ const Util = {
       case 1: 
         return {tile:"tree", solidity:50, maxSolidity:50};
       case 9: 
-        return {tile:"rock", solidity:Infinity, maxSolidity:Infinity};
+        return {tile:"rock", solidity:Number.MAX_SAFE_INTEGER , maxSolidity:Number.MAX_SAFE_INTEGER};
       default:
         throw new Error(`missing tile type ${tile}`);
     }

@@ -37,9 +37,9 @@ const placeScavengables = (origMap, scavengables) => {
         if( placementCounts[scavengable.id] !== scavengable.maxSpawnPerQuadrant &&   
             rnd <= scavengable.spawnChance  &&
             rowIndex !== 0 &&
-            rowIndex !== origMap.length &&
+            rowIndex !== origMap.length - 1 &&
             columnIndex !== 0 &&
-            columnIndex !== row.length){
+            columnIndex !== row.length - 1){
           mapWithPlacedScavenables[rowIndex][columnIndex] = scavengable.getMapTile();
           console.log("Placing", rowIndex, columnIndex, scavengable);
 

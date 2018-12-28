@@ -8,6 +8,7 @@ import Curative from './tiles/Curative';
 import MedSupply from './tiles/MedSupply';
 import TrapSupply from './tiles/TrapSupply';
 import Incense from './tiles/Incense';
+import Hut from './tiles/Hut';
 import EmptyGround from './tiles/EmptyGround';
 import DirectionContainer from './tiles/DirectionContainer.js';
 
@@ -54,6 +55,9 @@ const MapRow = ({row}) => {
                 break;
               case 'incense':
                 mapTags.push(<Incense key={index} opacity={op}></Incense> );
+                break;
+              case 'hut':
+                mapTags.push(<Hut key={index}></Hut> );
                 break;
               case 'empty-ground':
                 mapTags.push(<EmptyGround key={index}/>);

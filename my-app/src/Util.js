@@ -9,6 +9,8 @@ const Util = {
         return {tile:"empty-ground", solidity:0, maxSolidity:0};
       case 1: 
         return {tile:"tree", solidity:50, maxSolidity:50};
+      case 2: 
+        return {tile:"hut", solidity:Number.MAX_SAFE_INTEGER, maxSolidity:Number.MAX_SAFE_INTEGER};
       case 9: 
         return {tile:"rock", solidity:Number.MAX_SAFE_INTEGER , maxSolidity:Number.MAX_SAFE_INTEGER};
       default:
@@ -29,9 +31,16 @@ const Util = {
       Math.pow(self.column - target.column, 2)
     )
     return distance >= N;
+  },
+
+  isVillageIndex: function(row, column){
+    if(column < 12){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
-
-
 }
 
 const getNavigableCoordinates = (rowIndex, columnIndex, lastRowIndex, lastColumnIndex, gameMap, mapWidth, mapHeight) => {

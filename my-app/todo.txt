@@ -1,7 +1,6 @@
 * add direction controller
+* make unbreakable rock around edge
+* make sure scavengables don't spawn on that rock
+
 -------
-- make unbreakable rock around edge
-- make sure scavengables don't spawn on that rock
-- use that typescripty thing around props
-- add something else that finds character and follows him
 - add village

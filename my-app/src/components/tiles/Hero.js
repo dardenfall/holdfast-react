@@ -29,13 +29,17 @@ class Hero extends React.Component {
     }
   
     return (
-      <div className={cn + " tile"}></div>
+      <div className={cn + " tile"} ref={this.myRef}></div>
     );
   }
 
   componentDidMount() {
-//    $(this.myRef).effect( "bounce", {times:3}, 300 ); // eslint-disable-line
-console.log("component mounted")
+    let self = this;
+    // console.log(self.myRef.current.style);
+    // setTimeout(() => 
+      
+    //   self.myRef.current.style.transform = "translateX(10px)"
+    //   ,1000)
   }
   
 }

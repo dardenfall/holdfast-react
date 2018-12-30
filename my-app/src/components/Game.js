@@ -66,6 +66,7 @@ const Game = (props) => {
   
   return (
     <div 
+      id="game"
       tabIndex="0"
       onKeyDown={(e) => {
         e.preventDefault();

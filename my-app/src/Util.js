@@ -90,7 +90,6 @@ const getNavigableCoordinates = (rowIndex, columnIndex, lastRowIndex, lastColumn
 const touchAllNavigableTiles = (startRowIndex, startColumnIndex, quadrantMap, tileExecutor) => {
 
   const helper = (rowIndex, columnIndex, lastRowIndex, lastColumnIndex) => {
-    debugger;
     tileExecutor(rowIndex, columnIndex, quadrantMap);
 
     let navigableCoordinates = getNavigableCoordinates(rowIndex, columnIndex, lastRowIndex,
@@ -101,7 +100,7 @@ const touchAllNavigableTiles = (startRowIndex, startColumnIndex, quadrantMap, ti
       helper(coordinate.row, coordinate.column, rowIndex, columnIndex);
     })
   }
-  debugger;
+
   helper(startRowIndex, startColumnIndex, null, null);
 }
 

@@ -7,41 +7,88 @@ class Hero extends React.Component {
     this.myRef = React.createRef();
   }
 
+  bounce(direction){
+    let transitionCodeString = "";
+    let transitionNumber = 0;
+    switch(direction){
+
+      case Util.DIRECTION.RIGHT:
+        transitionCodeString = "translateX(";
+        transitionNumber = 10;
+        break;
+      case Util.DIRECTION.LEFT:
+        transitionCodeString = "translateX(";
+        transitionNumber = -10;
+        break;
+      case Util.DIRECTION.DOWN:
+        transitionCodeString = "translateY(";
+        transitionNumber = 10;
+        break;
+      case Util.DIRECTION.UP:
+        transitionCodeString = "translateY(";
+        transitionNumber = -10;
+        break;
+    
+      default:
+        throw Error("missing direction in hero bounce")
+    }
+
+    let self = this;
+    let timeTransition = 0;
+    do {
+      let code = transitionCodeString + transitionNumber + "px)";
+      console.log(code,transitionCodeString,transitionNumber)
+      
+      setTimeout(() => {
+        //in the case that the user moved off of the tile before the animation had a chance to run
+        if(!self.myRef || !self.myRef.current){
+          return;
+        }
+
+        self.myRef.current.style.transform = code
+      },timeTransition);    
+      
+      timeTransition = 200;
+      if(transitionNumber<0){
+        transitionNumber++;
+      } 
+      else{
+        transitionNumber--;
+      }
+
+    } while(Math.abs(transitionNumber) !== 0)
+  }
+
   render(){
     let cn = "";
 
     switch (this.props.direction) {
       case Util.DIRECTION.RIGHT:
-        cn = "hero-right";
+        cn = "hero hero-right";
         break;
       case Util.DIRECTION.LEFT:
-        cn = "hero-left";
+        cn = "hero hero-left";
         break;
       case Util.DIRECTION.DOWN:
-        cn = "hero-down";
+        cn = "hero hero-down";
         break;
       case Util.DIRECTION.UP:
-        cn = "hero-up";
+        cn = "hero hero-up";
         break;
     
       default:
         throw Error("NO DIRECTION PASSED TO HERO")
     }
   
+    if(this.props.bounceCount !== 0){
+      this.bounce(this.props.direction)
+    }
+    
     return (
       <div className={cn + " tile"} ref={this.myRef}></div>
     );
-  }
 
-  componentDidMount() {
-    let self = this;
-    // console.log(self.myRef.current.style);
-    // setTimeout(() => 
-      
-    //   self.myRef.current.style.transform = "translateX(10px)"
-    //   ,1000)
   }
-  
 }
 
 

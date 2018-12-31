@@ -7,7 +7,7 @@ const GameMap = ({tileMap}) => {
     <div className="map">
       {
         tileMap.map(
-          (row) => <MapRow row={row}></MapRow> 
+          (row, index) => <MapRow key={index} row={row}></MapRow> 
         )
       }
     </div>

@@ -95,7 +95,8 @@ const initialState = {
           {name: "medSupply", magnitude: 0},
           {name: "scrap", magnitude: 0},
           {name: "trapSupply", magnitude: 0}
-        ]
+        ],
+        bounceCount: 0
       },
       enemy: {
         direction: Util.DIRECTION.RIGHT,
@@ -108,7 +109,19 @@ const initialState = {
     }
   };
 
+let lastKeyPress = 0;
 const rootReducer = (state = initialState, action) => {
+  
+  //control how quickly key presses are tracked
+  let d = new Date();
+  let keyPressTime = d.getTime();
+  if(keyPressTime - lastKeyPress < 100){
+    return state;
+  }
+  else{
+    lastKeyPress = keyPressTime;
+  }
+
   switch (action.type) {
     case 'KEY_PRESSED':
       let returnState = processKeyPress(action.key, state);
@@ -159,9 +172,7 @@ const moveRight = (state) => {
 }
 
 const processInventory = (t, stateCopy) => {
-  debugger
   return stateCopy.game.hero.inventory.map((inventoryItem)=>{ 
-    debugger
     if(inventoryItem.name === t.tile){
       inventoryItem.magnitude++;
       return inventoryItem;
@@ -193,6 +204,7 @@ const updateHeroPosition = (state, direction, rowDelta, columnDelta) => {
       column: targetColumn
     };
     stateCopy.game.hero.location = l;
+    stateCopy.game.hero.bounceCount = 0;
   }
   else{
     let tile = stateCopy.game.map[targetRow][targetColumn];
@@ -202,6 +214,7 @@ const updateHeroPosition = (state, direction, rowDelta, columnDelta) => {
       processInventory(tile, stateCopy);
     }
 
+    stateCopy.game.hero.bounceCount++;
   }
   
   return stateCopy;

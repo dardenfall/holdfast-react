@@ -21,6 +21,25 @@ body {
   background-size: cover;
 }
 
+.transitionUp {
+  -webkit-transition-property: top;
+  -webkit-transition-duration: .5s;
+  -webkit-transition-timing-function: ease;
+  transition-property: top;
+  transition-duration: .5s;
+  transition-timing-function: ease;        
+  position:relative;
+  top:-10px;
+}
+.transitionUpReturn {
+  top:0px;
+  -webkit-transition-property: top;
+  -webkit-transition-duration: 1s;
+  transition-property: top;
+  transition-duration: 1s;    
+  position:relative;
+}
+
 .tree{
   background-image: url(/resources/tree2.gif);
 }
@@ -34,7 +53,7 @@ body {
 }
 
 .hero{
-  background-image: url(/resources/smallchar.gif);
+  border-radius: 100px;
 }
 
 .hero-left{

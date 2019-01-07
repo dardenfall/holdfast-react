@@ -35,20 +35,23 @@ class LeavingVillageContainer extends React.Component {
           }
       }
   }
-  render () {
-      this.state.isVisible = this.props.visible;
-      let self = this;
-      return (
-          <dialog className="dialog" ref={(ref) => this.dialog = ref}>
-            <div> 
-              <span>Hello World</span>
-              <button onClick= {e => {console.log("clicked"); debugger; self.hide();e.preventDefault(); leavingVillageSelected(e) }} 
-              id="leavingVillageClicked">Yes</button>
-            </div>
-          </dialog>
-      );
+  handleClick(e) {
+    this.hide(); 
+    e.preventDefault(); 
+    this.props.leavingVillageSelected(e)     
   }
-
+  render () {
+    this.state.isVisible = this.props.visible;
+    return (
+        <dialog className="dialog" ref={(ref) => this.dialog = ref}>
+          <div> 
+            <span>Hello World</span>
+            <button onClick={this.handleClick.bind(this)} 
+            id="leavingVillageClicked">Yes</button>
+          </div>
+        </dialog>
+    )
+  }
 }
 
 function mapStateToProps(state){

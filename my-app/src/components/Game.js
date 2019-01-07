@@ -85,12 +85,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators(
-    {
-      keyPressed: keyPressed
-    },
-    dispatch
-  ); 
+  return {
+    keyPressed: (key) => {
+      dispatch(keyPressed(key))
+    }
+  } 
 };
 export default connect(
   mapStateToProps,

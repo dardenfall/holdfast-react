@@ -1,3 +1,13 @@
+//TODO - convert Util to a class so I can use member functions :/
+function _isVillageIndex(row, column){
+  if(column < 12){
+    return true;
+  }
+  else{
+    return false;
+  }
+};
+ 
 const Util = {
   isTileNavigable(tile){
     return tile.solidity <= 0;
@@ -33,14 +43,26 @@ const Util = {
     return distance >= N;
   },
 
-  isVillageIndex: function(row, column){
-    if(column < 12){
+  isVillageIndex: _isVillageIndex,
+
+  isEnteringVillage: function(currentRow, currentColumn, targetRow, targetColumn){
+    if(!_isVillageIndex(currentRow, currentColumn) && _isVillageIndex(targetRow,targetColumn)){
+      return true;
+    }
+    else{
+      return false;
+    }
+  },
+
+  isExitingVillage: function(currentRow, currentColumn, targetRow, targetColumn){
+    if(_isVillageIndex(currentRow, currentColumn) && !_isVillageIndex(targetRow,targetColumn)){
       return true;
     }
     else{
       return false;
     }
   }
+
 }
 
 const getNavigableCoordinates = (rowIndex, columnIndex, lastRowIndex, lastColumnIndex, gameMap, mapWidth, mapHeight) => {

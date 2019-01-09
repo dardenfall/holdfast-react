@@ -64,7 +64,11 @@ let l = {
 let targetRow = state.game.hero.location.row + rowDelta;
 let targetColumn= state.game.hero.location.column + columnDelta;
 
-if(Util.isTileNavigable(tile)) {
+if(Util.isExitingVillage(state.game.hero.location.row, state.game.hero.location.column, targetRow, targetColumn)){
+  debugger;
+  stateCopy.game.focus.exitingVillageDialog = true;
+}
+else if(Util.isTileNavigable(tile)) {
   l = { 
     row: targetRow,
     column: targetColumn
@@ -75,9 +79,6 @@ if(Util.isTileNavigable(tile)) {
 // else if(Util.isEnteringVillage()){
 
 // }
-else if(Util.isExitingVillage()){
-  
-}
 else{
   let tile = stateCopy.game.map[targetRow][targetColumn];
   stateCopy.game.map[targetRow][targetColumn].solidity--;

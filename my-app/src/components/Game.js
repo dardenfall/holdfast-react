@@ -1,7 +1,6 @@
 import React from 'react';
 import { keyPressed } from '../actions';
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import GameMap from './GameMap.js';
 
 const QUADRANT_COLUMNS = 10;

@@ -3,14 +3,14 @@ const keyPressed = key => ({
     key
   });
 
-const enteringVillageSelected = buttonSelected => ({
+const enteringVillageSelected = proceed => ({
   type: 'ENTERING_VILLAGE_SELECTED',
-  buttonSelected
+  proceed
 });
 
-const leavingVillageSelected = buttonSelected => ({
+const leavingVillageSelected = proceed => ({
   type: 'LEAVING_VILLAGE_SELECTED',
-  buttonSelected
+  proceed
 });
 
 export{

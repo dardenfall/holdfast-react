@@ -83,8 +83,8 @@ const initialState = {
     game: {
       map: translatedMap,
       focus: {
-        exitingVillageDialog: true,
-        gameMap: true,
+        exitingVillageDialog: false,
+        gameMap: true
       },
       hero: {
         direction: Util.DIRECTION.RIGHT,
@@ -116,8 +116,7 @@ const initialState = {
 
 let lastKeyPress = 0;
 const rootReducer = (state = initialState, action) => {
-  debugger;
-  console.log("Action",  action)  
+
   //control how quickly key presses are tracked
   let d = new Date();
   let keyPressTime = d.getTime();
@@ -127,13 +126,20 @@ const rootReducer = (state = initialState, action) => {
   else{
     lastKeyPress = keyPressTime;
   }
+
   switch (action.type) {
     case 'KEY_PRESSED':
       let returnState = processKeyPress(action.key, state);
-      if( Util.withinNSquares(returnState.game.hero.location, returnState.game.enemy.location, 2)){
-        console.log('enemy is within 2 spaces');
-      }
       return returnState;
+    case 'LEAVING_VILLAGE_SELECTED':
+      if(action.proceed){
+        //39 is move right, which is the only way to exit the village at this point
+        // :/
+        return processKeyPress({which:39}, state);
+      }
+      else{
+        return state;
+      }
     default:
       return state;
   }

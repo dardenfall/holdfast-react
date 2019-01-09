@@ -1,6 +1,6 @@
 //TODO - convert Util to a class so I can use member functions :/
 function _isVillageIndex(row, column){
-  if(column < 12){
+  if(column < 10){
     return true;
   }
   else{

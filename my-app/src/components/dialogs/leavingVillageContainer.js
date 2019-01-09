@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import {leavingVillageSelected} from '../../actions'
 
 class LeavingVillageContainer extends React.Component {
@@ -38,16 +37,19 @@ class LeavingVillageContainer extends React.Component {
   handleClick(e) {
     this.hide(); 
     e.preventDefault(); 
-    this.props.leavingVillageSelected(e)     
+    let proceed = e.target.id === "leavingVillageClickedProceed"; 
+    this.props.leavingVillageSelected(proceed);
   }
   render () {
     this.state.isVisible = this.props.visible;
     return (
         <dialog className="dialog" ref={(ref) => this.dialog = ref}>
           <div> 
-            <span>Hello World</span>
+            <div>Hello World</div>
             <button onClick={this.handleClick.bind(this)} 
-            id="leavingVillageClicked">Yes</button>
+            id="leavingVillageClickedProceed">Yes</button>            
+            <button onClick={this.handleClick.bind(this)} 
+            id="leavingVillageClickedDonotProceed">No</button>
           </div>
         </dialog>
     )

@@ -61,9 +61,32 @@ const Util = {
     else{
       return false;
     }
-  }
+  },
 
+  getHeroRowIndex: function(state){
+    return state.game.hero.location.row;
+  },
+
+  getHeroColumnIndex: function(state){
+    return state.game.hero.location.column;
+  },
+
+  getHeroTile: function(state){
+    return state.game.hero.tile;
+  },
+
+  setHeroRowIndex: function(rowIndex, state){
+    state.game.hero.location.row = rowIndex;
+    return state;
+  },
+
+  setHeroColumnIndex: function(columnIndex, state){
+    state.game.hero.location.column = columnIndex;
+    return state;
+  },  
 }
+
+
 
 const getNavigableCoordinates = (rowIndex, columnIndex, lastRowIndex, lastColumnIndex, gameMap, mapWidth, mapHeight) => {
   let surroundingRowIndexes = [rowIndex];

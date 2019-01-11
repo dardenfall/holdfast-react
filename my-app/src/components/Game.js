@@ -2,6 +2,7 @@ import React from 'react';
 import { keyPressed } from '../actions';
 import { connect } from "react-redux";
 import GameMap from './GameMap.js';
+import Util from '../Util';
 
 const QUADRANT_COLUMNS = 10;
 const QUADRANT_ROWS = 6;

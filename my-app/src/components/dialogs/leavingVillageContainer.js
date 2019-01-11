@@ -35,7 +35,6 @@ class LeavingVillageContainer extends React.Component {
       }
   }
   handleClick(e) {
-    this.hide(); 
     e.preventDefault(); 
     let proceed = e.target.id === "leavingVillageClickedProceed"; 
     this.props.leavingVillageSelected(proceed);

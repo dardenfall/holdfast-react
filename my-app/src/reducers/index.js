@@ -132,14 +132,19 @@ const rootReducer = (state = initialState, action) => {
       let returnState = processKeyPress(action.key, state);
       return returnState;
     case 'LEAVING_VILLAGE_SELECTED':
+      let stateCopy =  JSON.parse(JSON.stringify(state));
+      stateCopy.game.focus.exitingVillageDialog = false,
+      stateCopy.game.focus.gameMap = true;
+      
       if(action.proceed){
-        //39 is move right, which is the only way to exit the village at this point
-        // :/
-        return processKeyPress({which:39}, state);
+
+        //we need to move the player right one space.  Not sure if this is the 
+        //best way to do this but....
+        stateCopy.game.hero.location.column++; 
+        return stateCopy;
       }
-      else{
-        return state;
-      }
+
+      return state;
     default:
       return state;
   }

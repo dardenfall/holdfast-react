@@ -44,7 +44,7 @@ class LeavingVillageContainer extends React.Component {
     return (
         <dialog className="dialog" ref={(ref) => this.dialog = ref}>
           <div> 
-            <div>Hello World</div>
+            <div>Are you sure you want to leave the village?</div>
             <button onClick={this.handleClick.bind(this)} 
             id="leavingVillageClickedProceed">Yes</button>            
             <button onClick={this.handleClick.bind(this)} 

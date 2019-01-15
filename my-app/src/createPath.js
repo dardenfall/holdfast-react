@@ -1,6 +1,8 @@
-const ROWS = 4;
-const COLUMNS = 4;
-const PICK_CLOSEST_CHANCE=.7;
+const ROWS = 30;
+const COLUMNS = 30;
+const PICK_CLOSEST_CHANCE=5;
+const PICK_SECOND_CHANCE=11; // set to 7 for more open map
+const PICK_THIRD_CHANCE=9;
 const getCartesianDistance = (x1, x2, y1, y2) => {
   return Math.round( 
     Math.sqrt( 
@@ -9,21 +11,23 @@ const getCartesianDistance = (x1, x2, y1, y2) => {
   )
 }
 
-function makeMap(entranceRowIndex, entranceColumnIndex, exitRowIndex, exitColumnIndex){
+function makeMap(entranceRowIndex, entranceColumnIndex, exitRowIndex, exitColumnIndex, maap){
   if(entranceRowIndex >= ROWS || exitRowIndex >= ROWS || 
      entranceColumnIndex >= COLUMNS || exitColumnIndex >= COLUMNS){
       throw Error("invalid parameters passed to make map - entrance or exit outside of map");
   }
 
-  let maap = []
-  for(let i  = 0; i < ROWS ;i++){
-    let row = [];
-    for(let j = 0; j < COLUMNS; j++){
-      row.push({});
+  //if no default map is supplied, create an empty one
+  if(!maap){
+    maap = [];
+    for(let i  = 0; i < ROWS ;i++){
+      let row = [];
+      for(let j = 0; j < COLUMNS; j++){
+        row.push(1);
+      }
+      maap.push(row);
     }
-    maap.push(row);
   }
-  console.log(maap);
 
   maap = maap.map( (row, rowIndex) => {
     return row.map( (cell, columnIndex) => {
@@ -31,17 +35,15 @@ function makeMap(entranceRowIndex, entranceColumnIndex, exitRowIndex, exitColumn
         rowIndex: rowIndex,
         columnIndex: columnIndex,
         distToExit: getCartesianDistance(rowIndex, exitRowIndex, columnIndex, exitColumnIndex),
-        isPath: false
+        isPath: cell === 0 ? true : false
       }
     })
   });
 
-  console.log(maap);
   let currentCellRowIndex = entranceRowIndex;
   let currentCellColumnIndex = entranceColumnIndex;
   
   while(currentCellRowIndex !== exitRowIndex || currentCellColumnIndex !== exitColumnIndex){
-    debugger
     maap[currentCellRowIndex][currentCellColumnIndex].isPath = true;
 
     //pick find valid neighboring cells
@@ -61,27 +63,34 @@ function makeMap(entranceRowIndex, entranceColumnIndex, exitRowIndex, exitColumn
       }
       let cell = maap[neighboringCellCoordinates[0]][neighboringCellCoordinates[1]];
       //if cell is already a path, continue
-      if(cell.isPath){
-        continue;
-      }
+      // if(cell.isPath){
+      //   continue;
+      // }
       potentialCells.push(cell);
     }
-    maap[currentCellRowIndex][currentCellColumnIndex].isPath = true;
 
     ///pick next cell
     //sort cells with closest first
-    potentialCells.sort((a,b) => Math.abs(b.distToExit - a.distToExit));
+    let rnd = Math.random();
+    potentialCells.sort((a,b) => a.distToExit - b.distToExit);
     let nextCell = null;
-    if(Math.random() * PICK_CLOSEST_CHANCE >= 1){
+    if(rnd * 10 < PICK_CLOSEST_CHANCE){
       nextCell = potentialCells[0];
     }
-    else {
+    else if(rnd * 10 < PICK_SECOND_CHANCE || potentialCells.length <= 2){
       nextCell = potentialCells[1];
+    }
+    else if(rnd * 10 < PICK_THIRD_CHANCE || potentialCells.length <= 3){
+      nextCell = potentialCells[2];
+    }
+    else{
+      nextCell = potentialCells[3];
     }
     
     currentCellRowIndex = nextCell.rowIndex;
     currentCellColumnIndex = nextCell.columnIndex;
   }
+  maap[currentCellRowIndex][currentCellColumnIndex].isPath = true;
 
   //convert cells back to 1 or 0
   let convertedMap = maap.map( (row, rowIndex) => {
@@ -89,10 +98,15 @@ function makeMap(entranceRowIndex, entranceColumnIndex, exitRowIndex, exitColumn
       return cell.isPath ? 0 : 1
       })
     });
-    console.log("--------------")
-    console.log(maap)
-    console.log("--------------")
-    console.log(convertedMap)
+
+    return convertedMap;
 }
-  
-makeMap(2,0,2,3)
+let startEndCoordinates = [[2,0,23,29],
+                           [3,25,27,3]];
+let maap = null;
+for(let coordinates of startEndCoordinates){
+  maap = makeMap(coordinates[0],coordinates[1],coordinates[2],coordinates[3], maap)
+  console.log("--------------");
+  console.log(maap);
+}
+                    

@@ -43,6 +43,34 @@ const getQuadrantMap = (heroRow, heroColumn, charCoordMapping, globalMap) => {
   return retMap;
 }
 
+const getFullMap = (heroRow, heroColumn, charCoordMapping, globalMap) => {
+
+  let startCol = 0;
+  let startRow = 0;
+
+  let retMap = [];
+  for(let r = startRow; r < globalMap.length; r++){
+    let mapRow = [];
+    for(let c = startCol; c < globalMap[r].length; c++){
+      
+      let charFound = false;
+      for(let char of charCoordMapping){
+        if(char.row === r && char.column === c){
+          mapRow.push(char.tile);
+          charFound = true;
+          break;
+        }
+      }
+
+      if(!charFound){
+        mapRow.push(globalMap[r][c]);
+      }
+    }
+    retMap.push(mapRow);
+  }
+  return retMap;
+}
+
 const Game = (props) => {
   const {game, keyPressed} = props;
   
@@ -56,7 +84,7 @@ const Game = (props) => {
       column: game.enemy.location.column,
       tile: game.enemy.tile
     }]
-    let digitMap = getQuadrantMap(game.hero.location.row, 
+    let digitMap = getFullMap(game.hero.location.row, 
       game.hero.location.column, 
       charCoordMapping, 
       game.map);

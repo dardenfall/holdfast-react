@@ -57,6 +57,11 @@ class Hero extends React.Component {
       }
 
     } while(Math.abs(transitionNumber) !== 0)
+
+    if(self.myRef && self.myRef.current){
+      self.myRef.current.scrollIntoView();
+    }
+
   }
 
   render(){

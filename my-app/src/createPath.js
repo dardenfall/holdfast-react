@@ -11,22 +11,29 @@ const getCartesianDistance = (x1, x2, y1, y2) => {
   )
 }
 
-function makeMap(entranceRowIndex, entranceColumnIndex, exitRowIndex, exitColumnIndex, maap){
+function makeMap(template = [], borderVal){
+  let maap = [];
+  for(let i  = 0; i < ROWS ;i++){
+    let row = [];
+    for(let j = 0; j < COLUMNS; j++){
+      cellVal = 1;
+      if(template[i] && typeof template[i][j] !== 'undefined'){
+        cellVal = template[i][j];
+      } else if(borderVal && (i === 0 || j === 0 || i === ROWS -1 || j === COLUMNS -1)){
+        cellVal = borderVal
+      }
+      row.push(cellVal);
+    }
+    maap.push(row);
+  }
+
+  return maap;
+}
+
+function makeMapPaths(entranceRowIndex, entranceColumnIndex, exitRowIndex, exitColumnIndex, maap, nonNavigableVal){
   if(entranceRowIndex >= ROWS || exitRowIndex >= ROWS || 
      entranceColumnIndex >= COLUMNS || exitColumnIndex >= COLUMNS){
       throw Error("invalid parameters passed to make map - entrance or exit outside of map");
-  }
-
-  //if no default map is supplied, create an empty one
-  if(!maap){
-    maap = [];
-    for(let i  = 0; i < ROWS ;i++){
-      let row = [];
-      for(let j = 0; j < COLUMNS; j++){
-        row.push(1);
-      }
-      maap.push(row);
-    }
   }
 
   maap = maap.map( (row, rowIndex) => {
@@ -35,7 +42,8 @@ function makeMap(entranceRowIndex, entranceColumnIndex, exitRowIndex, exitColumn
         rowIndex: rowIndex,
         columnIndex: columnIndex,
         distToExit: getCartesianDistance(rowIndex, exitRowIndex, columnIndex, exitColumnIndex),
-        isPath: cell === 0 ? true : false
+        isPath: cell === 0 ? true : false,
+        origVal: cell
       }
     })
   });
@@ -58,14 +66,11 @@ function makeMap(entranceRowIndex, entranceColumnIndex, exitRowIndex, exitColumn
       neighboringCellCoordinates[1] = direction[1] + currentCellColumnIndex;
       //if cell is invalid, continue;
       if(neighboringCellCoordinates[0] < 0 || neighboringCellCoordinates[0] >= COLUMNS ||
-         neighboringCellCoordinates[1] < 0 || neighboringCellCoordinates[1] >= ROWS){
+         neighboringCellCoordinates[1] < 0 || neighboringCellCoordinates[1] >= ROWS ||
+         maap[neighboringCellCoordinates[0]][neighboringCellCoordinates[1]].origVal === nonNavigableVal){
           continue;
       }
       let cell = maap[neighboringCellCoordinates[0]][neighboringCellCoordinates[1]];
-      //if cell is already a path, continue
-      // if(cell.isPath){
-      //   continue;
-      // }
       potentialCells.push(cell);
     }
 
@@ -95,18 +100,31 @@ function makeMap(entranceRowIndex, entranceColumnIndex, exitRowIndex, exitColumn
   //convert cells back to 1 or 0
   let convertedMap = maap.map( (row, rowIndex) => {
     return row.map( (cell, columnIndex) => {
-      return cell.isPath ? 0 : 1
+      return cell.isPath ? 0 : cell.origVal
       })
     });
 
     return convertedMap;
 }
-let startEndCoordinates = [[2,0,23,29],
-                           [3,25,27,3]];
-let maap = null;
+
+let template = [
+  [9,9,9,9,9,9,9,9,9,9],
+  [9,2,2,9,9,9,9,9,9,9],
+  [9,2,2,0,0,0,0,0,0,9],
+  [9,0,0,0,0,0,0,0,0,9],
+  [9,0,0,0,0,0,0,0,0,0],
+  [9,0,0,0,0,0,0,0,0,9],
+  [9,0,0,0,0,0,0,0,0,9],
+  [9,0,0,0,0,0,0,0,0,9],
+  [9,0,0,0,0,0,0,0,0,9],
+  [9,9,9,9,9,9,9,9,9,9]]
+let startEndCoordinates = [[4,10,23,28],
+                           [3,25,27,3],
+                           [10,2,20,19],
+                           [28,4,7,28]];
+let maap = makeMap(template, 9);
 for(let coordinates of startEndCoordinates){
-  maap = makeMap(coordinates[0],coordinates[1],coordinates[2],coordinates[3], maap)
-  console.log("--------------");
-  console.log(maap);
+  maap = makeMapPaths(coordinates[0],coordinates[1],coordinates[2],coordinates[3], maap,9);
 }
+console.log(maap);
                     

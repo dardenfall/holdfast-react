@@ -20,53 +20,61 @@ const MapRow = ({row}) => {
           (t, index) => {
             let mapTags = [];
             
+            //calculate opacity (whether or not the thing has been scavenged or chopped down)
             let op= 1;
             if(typeof t.solidity !== 'undefined'){
               op = t.solidity/t.maxSolidity;
             }
+            
+            let d = "hidden";
+            if(t.visible){
+              d = "visible"
+            } 
 
+            let tileMarkup = null;
             switch (t.tile){              
               case 'hero':
-                mapTags.push(<DirectionContainer key={index}/>);
+                tileMarkup = <DirectionContainer key={index}/>;
+                d = "visible"
                 break;
               case 'enemy':
-                mapTags.push(<Enemy key={index}/>);
+                tileMarkup = <Enemy key={index}/>;
                 break;
               case 'tree':
-                mapTags.push(<Tree key={index} opacity={op}></Tree> );
+                tileMarkup = <Tree key={index} opacity={op}></Tree>;
                 break;
               case 'rock':
-                mapTags.push(<Rock key={index} opacity={op}></Rock> );
+                tileMarkup = <Rock key={index} opacity={op}></Rock>;
                 break;
               case 'food':
-                mapTags.push(<Food key={index} opacity={op}></Food> );
+                tileMarkup = <Food key={index} opacity={op}></Food>;
                 break;
               case 'scrap':
-                mapTags.push(<Scrap key={index} opacity={op}></Scrap> );
+                tileMarkup = <Scrap key={index} opacity={op}></Scrap>;
                 break;
               case 'curative':
-                mapTags.push(<Curative key={index} opacity={op}></Curative> );
+                tileMarkup = <Curative key={index} opacity={op}></Curative>;
                 break;
               case 'medSupply':
-                mapTags.push(<MedSupply key={index} opacity={op}></MedSupply> );
+                tileMarkup = <MedSupply key={index} opacity={op}></MedSupply>;
                 break;
               case 'trapSupply':
-                mapTags.push(<TrapSupply key={index} opacity={op}></TrapSupply> );
+                tileMarkup = <TrapSupply key={index} opacity={op}></TrapSupply>;
                 break;
               case 'incense':
-                mapTags.push(<Incense key={index} opacity={op}></Incense> );
+                tileMarkup = <Incense key={index} opacity={op}></Incense>;
                 break;
               case 'hut':
-                mapTags.push(<Hut key={index}></Hut> );
+                tileMarkup = <Hut key={index}></Hut>;
                 break;
               case 'empty-ground':
-                mapTags.push(<EmptyGround key={index}/>);
+                tileMarkup = <EmptyGround key={index}/>;
                 break;            
               default: 
                 throw new Error("Missing tile type " + JSON.stringify(t))            
               }
             
-            return mapTags;              
+            return <div className="visiblitier" style={{visibility:d}}>{tileMarkup}</div>;              
           }
         )
       }

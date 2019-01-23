@@ -94,6 +94,7 @@ const scavengables = Array.from(Scavengable.instantiateScavengables());
 
 translatedMap = placeScavengables(translatedMap, scavengables)
 
+Util.updateVisibility(translatedMap, 4, 9, 0)
 const initialState = { 
     game: {
       map: translatedMap,

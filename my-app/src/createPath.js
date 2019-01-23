@@ -11,6 +11,39 @@ const getCartesianDistance = (x1, x2, y1, y2) => {
   )
 }
 
+var drawline = function(x0,y0,x1,y1,callback){
+	var tmp;
+	var steep = Math.abs(y1-y0) > Math.abs(x1-x0);
+  if(steep){
+  	//swap x0,y0
+  	tmp=x0; x0=y0; y0=tmp;
+    //swap x1,y1
+    tmp=x1; x1=y1; y1=tmp;
+  }
+  
+  var sign = 1;
+	if(x0>x1){
+    sign = -1;
+    x0 *= -1;
+    x1 *= -1;
+  }
+  var dx = x1-x0;
+  var dy = Math.abs(y1-y0);
+  var err = ((dx/2));
+  var ystep = y0 < y1 ? 1:-1;
+  var y = y0;
+  
+  for(var x=x0;x<=x1;x++){
+  	if(!(steep ? callback(y,sign*x) : callback(sign*x,y))) return false;
+    err = (err - dy);
+    if(err < 0){
+    	y+=ystep;
+      err+=dx;
+    }
+  }
+  return true;
+}
+
 function makeMap(template = [], borderVal){
   let maap = [];
   for(let i  = 0; i < ROWS ;i++){
@@ -101,10 +134,10 @@ function makeMapPaths(entranceRowIndex, entranceColumnIndex, exitRowIndex, exitC
   let convertedMap = maap.map( (row, rowIndex) => {
     return row.map( (cell, columnIndex) => {
       return cell.isPath ? 0 : cell.origVal
-      })
-    });
+    })
+  });
 
-    return convertedMap;
+  return convertedMap;
 }
 
 let template = [
@@ -127,4 +160,16 @@ for(let coordinates of startEndCoordinates){
   maap = makeMapPaths(coordinates[0],coordinates[1],coordinates[2],coordinates[3], maap,9);
 }
 console.log(maap);
+console.log("--------------------------");
                     
+convertedMap = maap.map( (row, rowIndex) => {
+  return row.map( (cell, columnIndex) => {
+    let retval = 1
+    if(drawline(4,10,rowIndex, columnIndex, (x,y) => maap[x][y]==0 ? true : false)){
+      retval = 0
+    }
+    return retval
+  })
+});
+
+console.log(convertedMap);

@@ -161,15 +161,18 @@ for(let coordinates of startEndCoordinates){
 }
 console.log(maap);
 console.log("--------------------------");
-                    
-convertedMap = maap.map( (row, rowIndex) => {
-  return row.map( (cell, columnIndex) => {
-    let retval = 1
-    if(drawline(4,10,rowIndex, columnIndex, (x,y) => maap[x][y]==0 ? true : false)){
-      retval = 0
-    }
-    return retval
-  })
-});
+  
 
-console.log(convertedMap);
+// does the visibility experiment
+//
+// convertedMap = maap.map( (row, rowIndex) => {
+//   return row.map( (cell, columnIndex) => {
+//     let retval = 1
+//     if(drawline(4,10,rowIndex, columnIndex, (x,y) => maap[x][y]==0 ? true : false)){
+//       retval = 0
+//     }
+//     return retval
+//   })
+// });
+
+// console.log(convertedMap);

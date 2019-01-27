@@ -6,12 +6,8 @@ body {
   -webkit-font-smoothing: antialiased;
   font-size: 1.125em;
   color: #333;
-}
-
-.map {
   line-height: 0em;
   background: #313131;
-
 }
 
 .tile {

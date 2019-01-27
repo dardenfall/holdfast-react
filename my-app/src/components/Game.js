@@ -1,7 +1,7 @@
 import React from 'react';
 import { keyPressed } from '../actions';
 import { connect } from "react-redux";
-import GameMap from './GameMap.js';
+import MapRow from './MapRow.js';
 import Util from '../Util';
 
 const QUADRANT_COLUMNS = 10;
@@ -101,8 +101,13 @@ const Game = (props) => {
         keyPressed(e)
       } 
     }> 
-      <GameMap tileMap={getMap()}></GameMap>
-    </div>
+      {
+        getMap().map(
+          (row, index) => <MapRow key={index} row={row}></MapRow> 
+        )
+      }
+
+      </div>
   );
 }
 

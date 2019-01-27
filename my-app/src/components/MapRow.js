@@ -27,10 +27,14 @@ const MapRow = ({row}) => {
             }
             
             let d = "hidden";
-            if(t.visible){
+            if(t.visible || t.grayscale){
               d = "visible"
             } 
 
+            let classname = "visiblitier"
+            if(t.grayscale){
+              classname = classname + " gray";
+            }
             let tileMarkup = null;
             switch (t.tile){              
               case 'hero':
@@ -73,8 +77,8 @@ const MapRow = ({row}) => {
               default: 
                 throw new Error("Missing tile type " + JSON.stringify(t))            
               }
-            
-            return <div className="visiblitier" style={{visibility:d}}>{tileMarkup}</div>;              
+
+              return <div className={classname} style={{visibility:d}}>{tileMarkup}</div>;              
           }
         )
       }

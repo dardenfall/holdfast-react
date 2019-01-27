@@ -121,7 +121,7 @@ const Util = {
     }
 
 
-    // mark squares as visible or invisible
+    // mark squares as visible or invisible if 
     maap.forEach( (row, rowIndex) => {
       return row.forEach( (cell, columnIndex) => {
         let lineOfSight = false;
@@ -134,8 +134,10 @@ const Util = {
       })
     });
 
+    // make bordered of visible, visible 
     maap.forEach( (row, rowIndex) => {
       return row.forEach( (cell, columnIndex) => {
+        cell.visible = false
         const directions = [[0,-1],[1,-1], //left
                             [1,0], [1,1], //above
                             [0,1], [-1,-1],//right
@@ -153,6 +155,34 @@ const Util = {
             continue;
           }
           cell.visible = true;
+          break;
+        }
+    
+      })
+    });
+
+    // make bordered of visible, visible 
+    maap.forEach( (row, rowIndex) => {
+      return row.forEach( (cell, columnIndex) => {
+        cell.grayscale = false;
+        const directions = [[0,-1],[1,-1], //left
+                            [1,0], [1,1], //above
+                            [0,1], [-1,-1],//right
+                            [-1,0], [-1,1] ] //below
+        for(let direction of directions){
+          let neighboringCellCoordinates = []
+          neighboringCellCoordinates[0] = direction[0] + rowIndex;
+          neighboringCellCoordinates[1] = direction[1] + columnIndex;
+          //if cell is invalid, continue;
+          if(typeof maap[neighboringCellCoordinates[0]] === 'undefined' || 
+             neighboringCellCoordinates[0] < 0 ||
+             typeof maap[neighboringCellCoordinates[0]][neighboringCellCoordinates[1]] === 'undefined' ||
+             neighboringCellCoordinates[1] < 0 ||
+             maap[neighboringCellCoordinates[0]][neighboringCellCoordinates[1]].visible === false ||
+             cell.visible){
+            continue;
+          }
+          cell.grayscale = true;
           break;
         }
     

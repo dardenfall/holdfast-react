@@ -18,7 +18,6 @@ const MapRow = ({row}) => {
       {
         row.map(
           (t, index) => {
-            let mapTags = [];
             
             //calculate opacity (whether or not the thing has been scavenged or chopped down)
             let op= 1;

@@ -1,8 +1,13 @@
 * add direction controller
 * make unbreakable rock around edge
 * make sure scavengables don't spawn on that rock
-
+* add village
 -------
-- add village
+
+- make map randomly generated
+  - put map functions into a class
+    - take gamemap logic and put it into game?
+
+- put visibility ring around guy
 
 =========================

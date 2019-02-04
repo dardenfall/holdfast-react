@@ -2,7 +2,6 @@ import React from 'react';
 import { keyPressed } from '../actions';
 import { connect } from "react-redux";
 import MapRow from './MapRow.js';
-import Util from '../Util';
 
 const QUADRANT_COLUMNS = 10;
 const QUADRANT_ROWS = 6;

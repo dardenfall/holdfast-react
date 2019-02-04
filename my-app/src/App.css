@@ -1,5 +1,135 @@
+body {
+  font-family: 'Helvetica Neue', Verdana, Helvetica, Arial, sans-serif;
+  /* max-width: 600px; */
+  margin: 0 auto;
+  padding-top: 10px;
+  -webkit-font-smoothing: antialiased;
+  font-size: 1.125em;
+  color: #333;
+  background: #313131;
+}
+
+#leavingVillageClickedProceed {
+  padding: 2px;
+  margin: 10px 5px 0px 0px;
+}
+
+#leavingVillageClickedDonotProceed{
+  padding: 2px;
+  margin: 10px 0px 0px 5px;
+}
+.dialog {
+  border-color: white;
+  color: white;
+  border-style: double;
+  background-color: #313131;
+}
+
+.tile {
+  background-color: #313131;
+  width: 32px;
+  height: 32px;
+  background-size: cover;
+}
+
+.transitionUp {
+  -webkit-transition-property: top;
+  -webkit-transition-duration: .5s;
+  -webkit-transition-timing-function: ease;
+  transition-property: top;
+  transition-duration: .5s;
+  transition-timing-function: ease;        
+  position:relative;
+  top:-10px;
+}
+.transitionUpReturn {
+  top:0px;
+  -webkit-transition-property: top;
+  -webkit-transition-duration: 1s;
+  transition-property: top;
+  transition-duration: 1s;    
+  position:relative;
+}
+
+.tree{
+  background-image: url(/resources/tree2.gif);
+}
+
+.hut{
+  background-image: url(/resources/hut.gif);
+}
+
+.rock{
+  background-image: url(/resources/rock.gif);
+}
+
+.hero{
+  border-radius: 100px;
+}
+
+.hero-left{
+  background-image: url(/resources/smallchar-left.gif);
+}
+
+.hero-right{
+  background-image: url(/resources/smallchar-right.gif);
+}
+
+.hero-up{
+  background-image: url(/resources/smallchar-up.gif);
+}
+
+.hero-down{
+  background-image: url(/resources/smallchar-down.gif);
+}
+
+.enemy{
+  background-image: url(/resources/enemy.gif);
+}
+
+.food{
+  background-image: url(/resources/food.gif);
+}
+
+.scrap{
+  background-image: url(/resources/scrap.gif);
+}
+
+.curative{
+  background-image: url((/resources/berry-bush.gif);
+}
+
+.medSupply{
+  background-image: url(/resources/medSupply.gif);
+}
+
+.trapSupply{
+  background-image: url(/resources/trapSupply.gif);
+}
+
+.empty-ground {
+  background: #313131;
+  width: 32px;
+  height: 32px;
+}
+
+.map-row div {
+    display: inline-block;
+  }
 .App {
   text-align: center;
+}
+
+.Inventory {
+  width: 190px;
+  color: white;
+}
+
+#Game {
+  position: relative;
+  left: 200 px;
+  width: 1000px;
+  line-height: 0;
 }
 
 .App-logo {

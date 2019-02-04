@@ -5,12 +5,14 @@ class GameMap {
     this.pickClosestChance=5;
     this.pickSecondChance=11; // set to 7 for more open map
     this.pickThirdChance=9;
-    this.heroStartingLocation = {
-      rowIndex: 4,
-      columnIndex: 10
-    }
   }
   
+  static getHeroStartingLocation(){
+    return {
+      rowIndex: 4,
+      columnIndex: 10
+    };
+  }
   getCartesianDistance(x1, x2, y1, y2) {
     return Math.round( 
       Math.sqrt( 
@@ -160,8 +162,8 @@ class GameMap {
       [9,0,0,0,0,0,0,0,0,9],
       [9,0,0,0,0,0,0,0,0,9],
       [9,9,9,9,9,9,9,9,9,9]]
-    let startEndCoordinates = [[this.heroStartingLocation.rowIndex,
-                                this.heroStartingLocation.columnIndex,23,28],
+    let startEndCoordinates = [[GameMap.getHeroStartingLocation().rowIndex,
+                                GameMap.getHeroStartingLocation().columnIndex,23,28],
                                [3,25,27,3],
                                [10,2,20,19],
                                [28,4,7,28]];

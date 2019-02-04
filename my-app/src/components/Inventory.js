@@ -2,17 +2,19 @@ import React from 'react';
 
 function inventoryRow(answer, index){
   return (
-    <div className="inventory-row" key={index}>
-      <span className="inventory-name">{answer.name}: </span>
-      <span className="inventory-amount">{answer.magnitude}</span>
-    </div>
+    <tr className="inventory-row" key={index}>
+      <td className="inventory-name">{answer.name}: </td>
+      <td className="inventory-amount">{answer.magnitude}</td>
+    </tr>
   )
 }
 
 const Inventory = (props) => {
   return (
-    <div>
-      {props.inventory.map(inventoryRow)}
+    <div class="Inventory">
+      <table>
+        {props.inventory.map(inventoryRow)}
+      </table>
     </div>
   );
 }

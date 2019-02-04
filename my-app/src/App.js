@@ -8,8 +8,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <InventoryContainer className="inventory"></InventoryContainer>
         <Game></Game>
-        <InventoryContainer></InventoryContainer>
         <LeavingVillageContainer></LeavingVillageContainer> 
       </div>
     );

@@ -118,18 +118,25 @@ body {
   }
 .App {
   text-align: center;
+  display: flex;
 }
 
-.Inventory {
+.inventory {
   width: 190px;
   color: white;
+  border-style: double;
+  border-color: coral;
+  padding: 10px;
+  font: "bookman";
 }
 
-#Game {
+#game {
   position: relative;
   left: 200 px;
   width: 1000px;
   line-height: 0;
+  border-style: double;
+  border-color: lightblue;
 }
 
 .App-logo {

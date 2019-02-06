@@ -59,11 +59,13 @@ class Hero extends React.Component {
     } while(Math.abs(transitionNumber) !== 0)
 
     if(self.myRef && self.myRef.current){
-      self.myRef.current.scrollIntoView();
+      var top = self.myRef.current.documentOffsetTop() - (window.innerHeight / 2 );
+      window.scrollTo( 0, top );
     }
 
   }
 
+  
   render(){
     let cn = "";
 
@@ -89,8 +91,13 @@ class Hero extends React.Component {
       this.bounce(this.props.direction)
     }
     
+    if(document.getElementById("hero")){
+      var top = document.getElementById("hero").documentOffsetTop() - (window.innerHeight / 2 );
+      window.scrollTo( 0, top );
+      console.log(top)
+    }
     return (
-      <div className={cn + " tile"} ref={this.myRef}></div>
+      <div id="hero" className={cn + " tile"} ref={this.myRef}></div>
     );
 
   }

@@ -3,7 +3,7 @@ import React from 'react';
 function inventoryRow(answer, index){
   return (
     <tr className="inventory-row" key={index}>
-      <td className="inventory-name">{answer.name}: </td>
+      <td align="left" className="inventory-name">{answer.name}: </td>
       <td className="inventory-amount">{answer.magnitude}</td>
     </tr>
   )
@@ -11,7 +11,7 @@ function inventoryRow(answer, index){
 
 const Inventory = (props) => {
   return (
-    <div class="Inventory">
+    <div class="inventory">
       <table>
         {props.inventory.map(inventoryRow)}
       </table>

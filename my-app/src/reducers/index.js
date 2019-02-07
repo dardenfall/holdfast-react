@@ -1,7 +1,7 @@
 import processKeyPress from './mapInputReducer';
-import InitialStateGenerator from '../models/InitialStateGenerator'
+import GameState from '../models/GameState'
 
-let initialState = InitialStateGenerator.getInitialState();
+let initialState = GameState.getInitialState();
 
 let lastKeyPress = 0;
 const rootReducer = (state = initialState, action) => {

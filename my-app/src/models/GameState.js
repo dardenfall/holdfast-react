@@ -67,8 +67,7 @@ let _getInitialMap = function(){
   return translatedMap;
 }
 
-class InitialStateGenerator{
- 
+class GameState{
 
   static getInitialState(){
     let maap =  _getInitialMap();
@@ -112,9 +111,11 @@ class InitialStateGenerator{
     
     return initialState;
   }
+
+  
 }
 
-export default InitialStateGenerator;
+export default GameState;
 
 
 

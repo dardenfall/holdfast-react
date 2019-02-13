@@ -112,7 +112,111 @@ class GameState{
     return initialState;
   }
 
+  constructor(state){
+    //make copy to start with
+    this._state = JSON.parse(JSON.stringify(state));
+  }
+ 
+  isExitingVillage(rowDelta, columnDelta){
+    let targetRowIndex = this.rowIndex() + rowDelta;
+    let targetColumnIndex= this.columnIndex() + columnDelta;
   
+    return Util.isExitingVillage(rowIndex, columnIndex, targetRowIndex, targetColumnIndex);
+  }
+
+  isTileNavigable(rowDelta,columnDelta) {
+    let rowIndex = this.rowIndex();
+    let columnIndex = this.columnIndex();
+    let targetTile = this._state.game.map[rowIndex+rowDelta][columnIndex+columnDelta];
+
+    return Util.isTileNavigable(targetTile);
+  }
+
+  exitingVillage(val){
+    if(!val){
+      return stateCopy.game.focus.exitingVillageDialog;
+    }
+    else{
+      this._state.game.focus.exitingVillageDialog = val;
+    }
+  }
+  
+  updateLocation(rowDelta,columnDelta) {
+    let targetRowIndex = this.rowIndex() + rowDelta;
+    let targetColumnIndex= this.columnIndex() + columnDelta;
+
+    l = { 
+      row: targetRowIndex,
+      column: targetColumnIndex
+    };  
+
+    stateCopy.game.hero.location = l;
+    stateCopy.game.hero.bounceCount = 0;
+  }
+
+  reduceSolidity(rowDelta,columnDelta) {
+    let targetRowIndex = this.rowIndex() + rowDelta;
+    let targetColumnIndex = this.columnIndex()  + columnDelta;
+
+    return this._state.game.map[targetRowIndex][targetColumnIndex].solidity--;
+  }  
+
+  increaseBounce(){
+    this._state.game.hero.bounceCount++;
+  }
+
+  processInventory(rowDelta,columnDelta){
+    let rowIndex = this.rowIndex();
+    let columnIndex = this.columnIndex();
+    let targetTile = this._state.game.map[rowIndex+rowDelta][columnIndex+columnDelta];
+
+    this._state.game.hero.inventory.map((inventoryItem)=>{ 
+      if(inventoryItem.name === targetTile.tile){
+        inventoryItem.magnitude++;
+        return inventoryItem;
+      }
+      else{
+        return inventoryItem;
+      }
+    });
+  }
+
+  rowIndex(rowIndex){
+    if(!rowIndex){
+      return this._state.game.hero.location.row;
+    }
+    else{
+      this._state.game.hero.location.row = rowIndex
+    }
+  }
+
+  columnIndex(columnIndex){
+    if(!columnIndex){
+      return this._state.game.hero.location.column;
+    }
+    else{
+      this._state.game.hero.location.row = columnIndex
+    }
+  }
+
+  direction(dir){
+    if(!dir){
+      return this._state.game.hero.direction;
+    }
+    else{
+      this._state.game.hero.direction = direction;
+    }
+  }
+
+  map(maap){
+    if(!maap){
+      return this._state.game.map;
+    }
+    else{
+      this._state.game.map = maap;
+    }
+  }
+
 }
 
 export default GameState;

@@ -20,63 +20,30 @@ const processKeyPress = (e, state) => {
   }      
 }
 
-const processInventory = (t, stateCopy) => {
-  return stateCopy.game.hero.inventory.map((inventoryItem)=>{ 
-    if(inventoryItem.name === t.tile){
-      inventoryItem.magnitude++;
-      return inventoryItem;
-    }
-    else{
-      return inventoryItem;
-    }
-  });
-}
-
-
 const updateHeroPosition = (state, direction, rowDelta, columnDelta) => {
-  let stateCopy =  JSON.parse(JSON.stringify(state));
-  stateCopy.game.hero.direction = direction;
+  let stateCopy =  new GameState(state);
+  stateCopy.direction(direction);
 
-  let rowIndex = state.game.hero.location.row;
-  let columnIndex = state.game.hero.location.column;
-  let targetTile = state.game.map[rowIndex+rowDelta][columnIndex+columnDelta];
-
-  let l = {
-    row: rowIndex, 
-    column: columnIndex
-  };
-
-  let targetRow = rowIndex + rowDelta;
-  let targetColumn= columnIndex + columnDelta;
-
-  if(Util.isExitingVillage(rowIndex, columnIndex, targetRow, targetColumn)){
-    stateCopy.game.focus.exitingVillageDialog = true;
+  if(stateCopy.isExitingVillage(rowDelta,columnDelta)){
+    stateCopy.exitingVillage(true);
   }
-  else if(Util.isTileNavigable(targetTile)) {
-    l = { 
-      row: targetRow,
-      column: targetColumn
-    };  
-    stateCopy.game.hero.location = l;
-    stateCopy.game.hero.bounceCount = 0;
+  else if(stateCopy.isTileNavigable(rowDelta,columnDelta)) {
 
-    Util.updateVisibility(stateCopy.game.map,
-      state.game.hero.location.row, 
-      state.game.hero.location.column, 
-      direction);
+    stateCopy.updateLocation(rowDelta,columnDelta);
+
+    Util.updateVisibility(stateCopy.map(),
+      stateCopy.rowIndex(), 
+      stateCopy.columnIndex(),  
+      stateCopy.direction());
   }
-  // else if(Util.isEnteringVillage()){
-
-  // }
   else{
-    let tile = stateCopy.game.map[targetRow][targetColumn];
-    stateCopy.game.map[targetRow][targetColumn].solidity--;
+    let solidity = stateCopy.reduceSolitidy(rowDelta,columnDelta)
 
-    if (stateCopy.game.map[targetRow][targetColumn].solidity === 0){
-      processInventory(tile, stateCopy);
+    if (solidity === 0){
+      stateCopy.processInventory(rowDelta,columnDelta);
     }
 
-    stateCopy.game.hero.bounceCount++;
+    stateCopy.increaseBounce(); 
   }
 
   return stateCopy;

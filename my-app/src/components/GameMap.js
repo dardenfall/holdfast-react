@@ -73,7 +73,7 @@ class GameMap {
     return maap;
   }
   
-  makeMapPaths(entranceRowIndex, entranceColumnIndex, exitRowIndex, exitColumnIndex, maap, nonNavigableVal){
+  makeMapPaths(entranceRowIndex, entranceColumnIndex, exitRowIndex, exitColumnIndex, maap, nonNavigableVal, template){
     if(entranceRowIndex >= this.rows || exitRowIndex >= this.rows || 
        entranceColumnIndex >= this.columns || exitColumnIndex >= this.columns){
         throw Error("invalid parameters passed to make map - entrance or exit outside of map");
@@ -143,7 +143,15 @@ class GameMap {
     //convert cells back to 1 or 0
     let convertedMap = maap.map( (row, rowIndex) => {
       return row.map( (cell, columnIndex) => {
-        return cell.isPath ? 0 : cell.origVal
+        if(template[rowIndex] && typeof template[rowIndex][columnIndex] !== 'undefined'){
+          return template[rowIndex][columnIndex];
+        }
+        else if (cell.isPath){
+          return 11
+        }
+        else {
+          return cell.origVal;
+        }
       })
     });
   
@@ -169,7 +177,7 @@ class GameMap {
                                [28,4,7,28]];
     let maap = this.makeMap(template, 9);
     for(let coordinates of startEndCoordinates){
-      maap = this.makeMapPaths(coordinates[0],coordinates[1],coordinates[2],coordinates[3], maap,9);
+      maap = this.makeMapPaths(coordinates[0],coordinates[1],coordinates[2],coordinates[3], maap,9, template);
     }
     return maap;
   }

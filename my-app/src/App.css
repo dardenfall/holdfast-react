@@ -96,7 +96,11 @@ body {
 }
 
 .curative{
-  background-image: url((/resources/berry-bush.gif);
+  background-image: url(/resources/berry-bush.gif);
+}
+
+.sprigs{
+  background-image: url(/resources/sprigs.gif);
 }
 
 .medSupply{

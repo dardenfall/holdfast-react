@@ -17,6 +17,8 @@ const Util = {
     switch(tile){
       case 0:
         return {tile:"empty-ground", solidity:0, maxSolidity:0};
+      case 11: 
+        return {tile:"sprigs", solidity:2, maxSolidity:2};
       case 1: 
         return {tile:"tree", solidity:50, maxSolidity:50};
       case 2: 
@@ -127,7 +129,7 @@ const Util = {
         let lineOfSight = false;
         //draws a line and returns 
         if(drawline(heroRowIndex,heroColumnIndex,rowIndex, columnIndex, 
-            (x,y) => maap[x][y].solidity === 0 ? true : false)){
+            (x,y) => ( maap[x][y].solidity === 0 || maap[x][y].tile === "sprigs") ? true : false)){
           lineOfSight = true;
         }
         cell.lineOfSight = lineOfSight;

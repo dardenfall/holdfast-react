@@ -121,7 +121,7 @@ class GameState{
     let targetRowIndex = this.rowIndex() + rowDelta;
     let targetColumnIndex= this.columnIndex() + columnDelta;
   
-    return Util.isExitingVillage(rowIndex, columnIndex, targetRowIndex, targetColumnIndex);
+    return Util.isExitingVillage(this.rowIndex(), this.columnIndex(), targetRowIndex, targetColumnIndex);
   }
 
   isTileNavigable(rowDelta,columnDelta) {
@@ -134,7 +134,7 @@ class GameState{
 
   exitingVillage(val){
     if(!val){
-      return stateCopy.game.focus.exitingVillageDialog;
+      return this._state.focus.exitingVillageDialog;
     }
     else{
       this._state.game.focus.exitingVillageDialog = val;
@@ -145,13 +145,13 @@ class GameState{
     let targetRowIndex = this.rowIndex() + rowDelta;
     let targetColumnIndex= this.columnIndex() + columnDelta;
 
-    l = { 
+    const l = { 
       row: targetRowIndex,
       column: targetColumnIndex
     };  
 
-    stateCopy.game.hero.location = l;
-    stateCopy.game.hero.bounceCount = 0;
+    this._state.game.hero.location = l;
+    this._state.game.hero.bounceCount = 0;
   }
 
   reduceSolidity(rowDelta,columnDelta) {
@@ -204,7 +204,7 @@ class GameState{
       return this._state.game.hero.direction;
     }
     else{
-      this._state.game.hero.direction = direction;
+      this._state.game.hero.direction = dir;
     }
   }
 
@@ -217,6 +217,9 @@ class GameState{
     }
   }
 
+  getState(){
+    return this._state;
+  }
 }
 
 export default GameState;

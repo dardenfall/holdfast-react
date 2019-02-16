@@ -5,6 +5,7 @@ import Food from './tiles/Food';
 import Scrap from './tiles/Scrap';
 import Enemy from './tiles/Enemy';
 import Curative from './tiles/Curative';
+import Sprigs from './tiles/Sprigs';
 import MedSupply from './tiles/MedSupply';
 import TrapSupply from './tiles/TrapSupply';
 import Incense from './tiles/Incense';
@@ -57,6 +58,9 @@ const MapRow = ({row}) => {
                 break;
               case 'curative':
                 tileMarkup = <Curative key={index} opacity={op}></Curative>;
+                break;
+              case 'sprigs':
+                tileMarkup = <Sprigs key={index} opacity={op}></Sprigs>;
                 break;
               case 'medSupply':
                 tileMarkup = <MedSupply key={index} opacity={op}></MedSupply>;

@@ -1,4 +1,5 @@
 import Util from '../Util.js'
+import GameState from '../models/GameState'
 
 const processKeyPress = (e, state) => {
   switch (e.which) {
@@ -21,7 +22,7 @@ const processKeyPress = (e, state) => {
 }
 
 const updateHeroPosition = (state, direction, rowDelta, columnDelta) => {
-  let stateCopy =  new GameState(state);
+  let stateCopy = new GameState(state);
   stateCopy.direction(direction);
 
   if(stateCopy.isExitingVillage(rowDelta,columnDelta)){
@@ -37,7 +38,7 @@ const updateHeroPosition = (state, direction, rowDelta, columnDelta) => {
       stateCopy.direction());
   }
   else{
-    let solidity = stateCopy.reduceSolitidy(rowDelta,columnDelta)
+    let solidity = stateCopy.reduceSolidity(rowDelta,columnDelta)
 
     if (solidity === 0){
       stateCopy.processInventory(rowDelta,columnDelta);
@@ -46,7 +47,7 @@ const updateHeroPosition = (state, direction, rowDelta, columnDelta) => {
     stateCopy.increaseBounce(); 
   }
 
-  return stateCopy;
+  return stateCopy.getState();
 }
 
 export default processKeyPress;

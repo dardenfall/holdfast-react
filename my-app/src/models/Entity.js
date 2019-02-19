@@ -1,7 +1,8 @@
 
 class Entity {
-  constructor(id, health){
+  constructor(id, name, health){
     this.id = id;
+    this.name = name;
     this.health = health;
   }
 }

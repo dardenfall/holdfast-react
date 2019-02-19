@@ -9,8 +9,7 @@ class Scavengable {
   }
 
   getMapTile(){
-    return {tile:this.name, 
-            component:this.component, 
+    return {tile:this.name,  
             solidity:this.solidity,
             maxSolidity:this.maxSolidity}
   }

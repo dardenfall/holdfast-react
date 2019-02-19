@@ -96,7 +96,8 @@ class GameState{
             {name: "scrap", magnitude: 0},
             {name: "trapSupply", magnitude: 0}
           ],
-          bounceCount: 0
+          bounceCount: 0,
+          id:0, // this will be which ever hero they select
         },
         enemy: {
           direction: Util.DIRECTION.RIGHT,

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "parcel": "^1.9.7",
+    "parcel": "^1.12.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-redux": "^5.1.1",
